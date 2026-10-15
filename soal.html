@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#172554">
+  <title>Try Out UKPPPG PGSD — SJT & PCK</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #18243a;
+      --muted: #68758a;
+      --navy: #172554;
+      --blue: #3157c8;
+      --blue-dark: #2547ae;
+      --blue-soft: #edf2ff;
+      --line: #e4e9f2;
+      --surface: #ffffff;
+      --page: #f4f6fb;
+      --green: #18794e;
+      --green-bg: #eaf8f0;
+      --red: #b42332;
+      --red-bg: #fff0f1;
+      --shadow: 0 18px 50px rgba(23, 37, 84, .08);
+      --radius-lg: 22px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .topbar {
+      background: var(--navy);
+      color: #fff;
+      padding: 15px 24px;
+    }
+    .topbar-inner {
+      max-width: 1080px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.13);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+    .brand-mark svg { width: 21px; height: 21px; }
+    .brand-name { font-size: 14px; font-weight: 750; letter-spacing: .02em; }
+    .brand-sub { color: #cbd5f2; font-size: 11px; margin-top: 1px; }
+    .topbar-tag {
+      color: #dbe5ff;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 11px;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+
+    .page-shell { max-width: 1080px; margin: 0 auto; padding: 34px 24px 56px; }
+    .intro { margin-bottom: 25px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 9px;
+    }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); }
+    h1 {
+      font-size: clamp(27px, 4vw, 39px);
+      line-height: 1.17;
+      letter-spacing: -.04em;
+      color: var(--navy);
+      margin: 0;
+      font-weight: 780;
+    }
+    .intro p { color: var(--muted); margin: 11px 0 0; max-width: 650px; font-size: 14px; }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 270px;
+      align-items: start;
+      gap: 22px;
+    }
+    .main-column { min-width: 0; }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+    .progress-panel { padding: 20px 22px; margin-bottom: 17px; }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    .progress-label { font-size: 13px; font-weight: 750; }
+    .progress-count { font-size: 12px; color: var(--muted); font-weight: 650; }
+    .progress-track { height: 6px; background: #edf0f7; border-radius: 999px; overflow: hidden; }
+    .progress-fill {
+      height: 100%; width: 0; background: linear-gradient(90deg, #3157c8, #7394f4);
+      border-radius: inherit; transition: width .35s ease;
+    }
+    .progress-hint { font-size: 11px; color: var(--muted); margin-top: 9px; }
+
+    .question-card { padding: clamp(20px, 3.5vw, 30px); transition: box-shadow .25s ease, transform .25s ease; }
+    .question-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 17px; }
+    .question-number {
+      display: inline-grid; place-items: center; min-width: 36px; height: 36px;
+      border-radius: 11px; background: var(--blue-soft); color: var(--blue);
+      font-size: 13px; font-weight: 800;
+    }
+    .question-type {
+      color: var(--muted); font-size: 11px; font-weight: 750; letter-spacing: .07em; text-transform: uppercase;
+    }
+    .question-title { font-size: 16px; line-height: 1.8; font-weight: 650; margin: 0 0 22px; }
+    .options-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .option-label {
+      position: relative; display: flex; align-items: flex-start; gap: 12px;
+      border: 1px solid var(--line); border-radius: var(--radius-md); padding: 13px 15px;
+      cursor: pointer; transition: border-color .2s ease, background .2s ease, transform .2s ease;
+      min-height: 52px;
+    }
+    .option-label:hover { border-color: #aebff2; background: #f9faff; }
+    .option-label:active { transform: scale(.995); }
+    .option-label:has(input:checked) { border-color: var(--blue); background: #f2f5ff; box-shadow: 0 0 0 2px rgba(49,87,200,.07); }
+    .option-label input {
+      position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none;
+    }
+    .option-letter {
+      flex: 0 0 27px; width: 27px; height: 27px; display: grid; place-items: center;
+      border: 1px solid #d8dfec; border-radius: 8px; color: #59677d; background: #fff;
+      font-size: 11px; font-weight: 800; margin-top: 1px; transition: all .2s ease;
+    }
+    .option-label:has(input:checked) .option-letter { color: #fff; border-color: var(--blue); background: var(--blue); }
+    .option-text { font-size: 13px; line-height: 1.65; color: #344158; padding-top: 2px; }
+    .option-label:has(input:focus-visible) { outline: 3px solid rgba(49,87,200,.28); outline-offset: 2px; }
+    .option-label.is-correct { border-color: var(--green); background: var(--green-bg); }
+    .option-label.is-correct .option-letter { background: var(--green); border-color: var(--green); color: #fff; }
+    .option-label.is-wrong { border-color: var(--red); background: var(--red-bg); }
+    .option-label.is-wrong .option-letter { background: var(--red); border-color: var(--red); color: #fff; }
+    .result-box { display: none; margin-top: 20px; border-radius: 13px; padding: 16px; animation: riseIn .28s ease both; }
+    .result-box.correct { display: block; color: var(--green); background: var(--green-bg); border: 1px solid #c4ead4; }
+    .result-box.incorrect { display: block; color: var(--red); background: var(--red-bg); border: 1px solid #f7cdd1; }
+    .result-heading { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; margin-bottom: 5px; }
+    .result-explanation { color: #3c485c; font-size: 12px; line-height: 1.75; }
+    .result-explanation strong { color: var(--ink); }
+
+    .sidebar { display: grid; gap: 16px; }
+    .side-card { padding: 20px; }
+    .side-title { font-size: 13px; font-weight: 800; margin: 0 0 13px; color: var(--navy); }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #edf0f6; gap: 10px; }
+    .stat-row:last-child { border-bottom: 0; padding-bottom: 0; }
+    .stat-label { font-size: 12px; color: var(--muted); }
+    .stat-value { font-size: 13px; font-weight: 800; color: var(--ink); }
+    .side-note { background: #f7f8fc; border-radius: 12px; padding: 13px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+    .side-note strong { color: var(--ink); display: block; font-size: 12px; margin-bottom: 3px; }
+    .summary {
+      display: none; padding: 23px; margin-top: 17px; text-align: center;
+      animation: riseIn .35s ease both;
+    }
+    .summary.visible { display: block; }
+    .summary-kicker { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
+    .score-number { font-size: 43px; font-weight: 850; letter-spacing: -.05em; color: var(--navy); line-height: 1.2; margin: 7px 0 4px; }
+    .score-caption { color: var(--muted); font-size: 12px; }
+    .summary-stats { display: flex; justify-content: center; gap: 10px; margin: 20px 0 0; flex-wrap: wrap; }
+    .summary-stat { background: #f6f8fc; border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; min-width: 100px; }
+    .summary-stat strong { display: block; font-size: 18px; color: var(--navy); }
+    .summary-stat span { display: block; color: var(--muted); font-size: 10px; }
+    .action-bar { display: flex; gap: 10px; margin-top: 20px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      border: 0; border-radius: 12px; padding: 13px 20px; cursor: pointer;
+      font-size: 13px; font-weight: 750; transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .btn:active { transform: translateY(1px); }
+    .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 6px 15px rgba(49,87,200,.2); }
+    .btn-primary:hover { background: var(--blue-dark); box-shadow: 0 8px 18px rgba(49,87,200,.25); }
+    .btn-secondary { background: #eef1f8; color: var(--navy); }
+    .btn-secondary:hover { background: #e2e7f2; }
+    .action-bar .btn { flex: 1; }
+    .validation { display: none; margin: 12px 0 0; font-size: 12px; color: var(--red); }
+    .validation.show { display: block; }
+    .footer { text-align: center; color: #8993a5; font-size: 11px; margin-top: 26px; }
+
+    @keyframes riseIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media (max-width: 800px) {
+      .page-shell { max-width: 680px; padding-top: 27px; }
+      .layout { grid-template-columns: minmax(0, 1fr); }
+      .sidebar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .side-card { height: 100%; }
+    }
+    @media (max-width: 540px) {
+      body { background: #f5f7fc; }
+      .topbar { padding: 12px 16px; }
+      .topbar-inner { gap: 10px; }
+      .brand-mark { width: 35px; height: 35px; border-radius: 10px; }
+      .brand-name { font-size: 12px; }
+      .brand-sub { font-size: 10px; }
+      .topbar-tag { font-size: 10px; padding: 5px 8px; }
+      .page-shell { padding: 23px 13px 34px; }
+      .intro { margin-bottom: 20px; }
+      h1 { font-size: 28px; line-height: 1.16; }
+      .intro p { font-size: 12px; line-height: 1.7; margin-top: 9px; }
+      .eyebrow { font-size: 10px; margin-bottom: 8px; }
+      .layout { gap: 13px; }
+      .panel { border-radius: 18px; }
+      .progress-panel { padding: 16px; margin-bottom: 12px; }
+      .progress-label { font-size: 12px; }
+      .progress-count { font-size: 11px; }
+      .question-card { padding: 19px 15px; }
+      .question-meta { margin-bottom: 13px; }
+      .question-number { min-width: 33px; height: 33px; border-radius: 10px; }
+      .question-title { font-size: 14px; line-height: 1.78; margin-bottom: 18px; }
+      .options-list { gap: 8px; }
+      .option-label { gap: 10px; padding: 12px 11px; border-radius: 12px; min-height: 50px; }
+      .option-letter { flex-basis: 25px; width: 25px; height: 25px; border-radius: 7px; }
+      .option-text { font-size: 12px; line-height: 1.65; }
+      .result-box { padding: 13px; margin-top: 16px; }
+      .result-explanation { font-size: 12px; }
+      .sidebar { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+      .side-card { padding: 16px; }
+      .side-title { margin-bottom: 8px; }
+      .stat-row { padding: 8px 0; }
+      .side-note { padding: 12px; }
+      .action-bar { position: sticky; bottom: 10px; z-index: 5; margin: 15px -1px 0; }
+      .action-bar .btn { box-shadow: 0 7px 22px rgba(23,37,84,.16); padding: 13px 12px; }
+      .summary { padding: 20px 14px; }
+      .score-number { font-size: 39px; }
+      .summary-stat { min-width: 85px; padding: 9px 12px; }
+      .footer { font-size: 10px; margin-top: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>
+            <path d="M4 5.5v16M8 7h8M8 11h7"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">RUANG LATIHAN GURU</div>
+          <div class="brand-sub">Persiapan UKPPPG · PGSD</div>
+        </div>
+      </div>
+      <div class="topbar-tag">SJT &amp; PCK</div>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="intro">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> Simulasi latihan</div>
+      <h1>Try Out UKPPPG PGSD</h1>
+      <p>Latihan soal untuk mengasah pertimbangan situasional dan pemahaman pedagogik. Kerjakan dengan tenang, lalu tinjau pembahasannya.</p>
+    </section>
+
+    <div class="layout">
+      <div class="main-column">
+        <section class="panel progress-panel" aria-label="Progres pengerjaan">
+          <div class="progress-top">
+            <span class="progress-label">Progres pengerjaan</span>
+            <span class="progress-count" id="progressCount">0 dari 1 terjawab</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Progres soal" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0" id="progressTrack">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-hint">Pilih satu jawaban terbaik untuk melanjutkan.</div>
+        </section>
+
+        <form id="quizForm" novalidate>
+          <section class="panel question-card" id="q1">
+            <div class="question-meta">
+              <span class="question-number">01</span>
+              <span class="question-type">Soal pedagogik · Pilihan ganda</span>
+            </div>
+            <h2 class="question-title">Pada aktivitas pembelajaran di kelas, guru memberikan soal kepada peserta didik sebagai berikut: jika suatu persegi panjang memiliki panjang 15 cm dan lebar 10 cm, tentukan keliling persegi panjang tersebut. Jawaban siswa adalah 150 cm², dengan alasan keliling persegi panjang adalah panjang dikalikan lebar. Penanganan yang tepat untuk mengatasi kesulitan peserta didik tersebut adalah memberikan ….</h2>
+            <ul class="options-list">
+              <li><label class="option-label"><input type="radio" name="q1" value="A"><span class="option-letter">A</span><span class="option-text">Penjelasan ulang bahwa rumus keliling persegi panjang adalah panjang dikalikan lebar.</span></label></li>
+              <li><label class="option-label"><input type="radio" name="q1" value="B"><span class="option-letter">B</span><span class="option-text">Pertanyaan pancingan terkait dengan rumus luas persegi panjang.</span></label></li>
+              <li><label class="option-label"><input type="radio" name="q1" value="C"><span class="option-letter">C</span><span class="option-text">Scaffolding kepada peserta didik tentang cara menentukan keliling bangun persegi panjang.</span></label></li>
+              <li><label class="option-label"><input type="radio" name="q1" value="D"><span class="option-letter">D</span><span class="option-text">Soal yang lebih sulit tentang menentukan keliling bangun persegi panjang.</span></label></li>
+              <li><label class="option-label"><input type="radio" name="q1" value="E"><span class="option-letter">E</span><span class="option-text">Hukuman kepada peserta didik yang mengalami kesalahan dalam menjawab.</span></label></li>
+            </ul>
+            <div class="validation" id="validationMessage" role="alert">Pilih satu jawaban terlebih dahulu sebelum memeriksa hasil.</div>
+            <div class="result-box" id="feedback-q1" aria-live="polite"></div>
+          </section>
+
+          <div class="action-bar">
+            <button class="btn btn-primary" id="checkButton" type="button">
+              Periksa jawaban <span aria-hidden="true">→</span>
+            </button>
+            <button class="btn btn-secondary" id="resetButton" type="button" hidden>Ulangi</button>
+          </div>
+        </form>
+
+        <section class="panel summary" id="scoreSummary" aria-live="polite">
+          <div class="summary-kicker">Hasil latihanmu</div>
+          <div class="score-number" id="scoreNumber">0%</div>
+          <div class="score-caption" id="scoreCaption">0 dari 1 soal dijawab benar</div>
+          <div class="summary-stats">
+            <div class="summary-stat"><strong id="correctCount">0</strong><span>Jawaban benar</span></div>
+            <div class="summary-stat"><strong id="wrongCount">0</strong><span>Jawaban salah</span></div>
+            <div class="summary-stat"><strong id="answeredCount">0/1</strong><span>Terjawab</span></div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="sidebar">
+        <section class="panel side-card">
+          <h2 class="side-title">Ringkasan latihan</h2>
+          <div class="stat-row"><span class="stat-label">Jumlah soal</span><span class="stat-value">1 soal</span></div>
+          <div class="stat-row"><span class="stat-label">Bentuk soal</span><span class="stat-value">Pilihan ganda</span></div>
+          <div class="stat-row"><span class="stat-label">Topik</span><span class="stat-value">Pedagogik</span></div>
+        </section>
+        <section class="panel side-card">
+          <h2 class="side-title">Sebelum mulai</h2>
+          <div class="side-note">
+            <strong>Kerjakan dengan cermat</strong>
+            Baca kasus sampai selesai, pertimbangkan kebutuhan belajar peserta didik, lalu pilih jawaban yang paling tepat.
+          </div>
+        </section>
+      </aside>
+    </div>
+    <footer class="footer">Ruang Latihan Guru · Belajar bertahap, bertumbuh bermakna.</footer>
+  </main>
+
+  <script>
+    (() => {
+      const answerKey = {
+        q1: "C"
+      };
+
+      const explanations = {
+        q1: "Scaffolding adalah bantuan belajar yang diberikan secara bertahap sesuai kebutuhan peserta didik. Guru dapat membimbing siswa membedakan keliling (jumlah seluruh sisi) dan luas (panjang × lebar), misalnya dengan gambar, pertanyaan penuntun, lalu latihan mandiri."
+      };
+
+      const form = document.getElementById("quizForm");
+      const checkButton = document.getElementById("checkButton");
+      const resetButton = document.getElementById("resetButton");
+      const progressCount = document.getElementById("progressCount");
+      const progressFill = document.getElementById("progressFill");
+      const progressTrack = document.getElementById("progressTrack");
+      const validationMessage = document.getElementById("validationMessage");
+      const feedback = document.getElementById("feedback-q1");
+      const summary = document.getElementById("scoreSummary");
+      let checked = false;
+
+      function updateProgress() {
+        const answered = document.querySelectorAll('input[name="q1"]:checked').length;
+        progressCount.textContent = `${answered} dari 1 terjawab`;
+        progressFill.style.width = `${answered * 100}%`;
+        progressTrack.setAttribute("aria-valuenow", answered);
+        if (!checked) validationMessage.classList.remove("show");
+      }
+
+      function checkAnswers() {
+        const selected = document.querySelector('input[name="q1"]:checked');
+        if (!selected) {
+          validationMessage.classList.add("show");
+          document.querySelector(".question-card").scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        checked = true;
+        const isCorrect = selected.value === answerKey.q1;
+        document.querySelectorAll(".option-label").forEach(label => {
+          const input = label.querySelector("input");
+          label.classList.remove("is-correct", "is-wrong");
+          if (input.value === answerKey.q1) label.classList.add("is-correct");
+          if (input.checked && !isCorrect) label.classList.add("is-wrong");
+          input.disabled = true;
+        });
+
+        feedback.className = `result-box ${isCorrect ? "correct" : "incorrect"}`;
+        feedback.innerHTML = `
+          <div class="result-heading">${isCorrect ? "✓ Jawaban benar" : "✕ Belum tepat"}</div>
+          <div class="result-explanation">${isCorrect ? "Pilihanmu tepat." : `Jawaban yang benar adalah <strong>C — Scaffolding</strong>.`} ${explanations.q1}</div>
+        `;
+
+        document.getElementById("scoreNumber").textContent = isCorrect ? "100%" : "0%";
+        document.getElementById("scoreCaption").textContent = `${isCorrect ? 1 : 0} dari 1 soal dijawab benar`;
+        document.getElementById("correctCount").textContent = isCorrect ? "1" : "0";
+        document.getElementById("wrongCount").textContent = isCorrect ? "0" : "1";
+        document.getElementById("answeredCount").textContent = "1/1";
+        summary.classList.add("visible");
+        checkButton.hidden = true;
+        resetButton.hidden = false;
+        validationMessage.classList.remove("show");
+        summary.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+
+      function resetQuiz() {
+        form.reset();
+        checked = false;
+        document.querySelectorAll(".option-label").forEach(label => {
+          label.classList.remove("is-correct", "is-wrong");
+          label.querySelector("input").disabled = false;
+        });
+        feedback.className = "result-box";
+        feedback.textContent = "";
+        summary.classList.remove("visible");
+        checkButton.hidden = false;
+        resetButton.hidden = true;
+        validationMessage.classList.remove("show");
+        updateProgress();
+        document.querySelector(".question-card").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      form.addEventListener("change", updateProgress);
+      checkButton.addEventListener("click", checkAnswers);
+      resetButton.addEventListener("click", resetQuiz);
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
