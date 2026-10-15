@@ -1,691 +1,172 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulasi UKPPPG PGSD 2024 | Pembahasan Interaktif</title>
-    <!-- Font Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --primary-light: #e0e7ff;
-            --surface: #ffffff;
-            --background: #f8fafc;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            
-            --success: #10b981;
-            --success-bg: #ecfdf5;
-            --success-border: #a7f3d0;
-            --success-text: #065f46;
-            
-            --error: #ef4444;
-            --error-bg: #fef2f2;
-            --error-border: #fecaca;
-            --error-text: #991b1b;
-
-            --info-bg: #f0f9ff;
-            --info-border: #bae6fd;
-            --info-text: #0369a1;
-
-            --warning-bg: #fffbeb;
-            --warning-border: #fde68a;
-            --warning-text: #b45309;
-            
-            --radius-lg: 16px;
-            --radius-md: 12px;
-            --radius-sm: 8px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--background);
-            color: var(--text-main);
-            line-height: 1.5;
-            padding-bottom: 90px;
-        }
-
-        /* Top Header Sticky */
-        .app-header {
-            position: sticky;
-            top: 0;
-            z-index: 40;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(8px);
-            border-bottom: 1px solid var(--border);
-            padding: 12px 16px;
-        }
-
-        .header-content {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .brand-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .badge {
-            background: var(--primary-light);
-            color: var(--primary);
-            font-size: 11px;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-
-        .progress-bar-container {
-            max-width: 800px;
-            margin: 8px auto 0 auto;
-            height: 4px;
-            background: var(--border);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        /* Main Area */
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 16px;
-        }
-
-        .hero-banner {
-            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
-            color: white;
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-md);
-        }
-
-        .hero-banner h1 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .hero-banner p {
-            font-size: 13px;
-            opacity: 0.9;
-        }
-
-        /* Cards */
-        .question-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s ease;
-        }
-
-        .question-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .question-number {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--primary);
-            background: var(--primary-light);
-            padding: 4px 10px;
-            border-radius: 6px;
-        }
-
-        .question-text {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-bottom: 16px;
-            line-height: 1.6;
-        }
-
-        /* Options */
-        .options-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .option-item {
-            position: relative;
-        }
-
-        .option-item input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 14px 16px;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            background: var(--surface);
-            transition: all 0.2s ease;
-            font-size: 14px;
-            color: #334155;
-        }
-
-        .option-label:hover {
-            border-color: #cbd5e1;
-            background: #f8fafc;
-        }
-
-        .option-indicator {
-            min-width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid #cbd5e1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1px;
-            transition: all 0.2s ease;
-        }
-
-        .option-item input[type="radio"]:checked + .option-label {
-            border-color: var(--primary);
-            background-color: var(--primary-light);
-            color: var(--primary-hover);
-            font-weight: 500;
-        }
-
-        .option-item input[type="radio"]:checked + .option-label .option-indicator {
-            border-color: var(--primary);
-            background: var(--primary);
-        }
-
-        .option-item input[type="radio"]:checked + .option-label .option-indicator::after {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background: white;
-            border-radius: 50%;
-        }
-
-        /* Detailed Feedback Section */
-        .explanation-wrapper {
-            margin-top: 18px;
-            display: none;
-            flex-direction: column;
-            gap: 10px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            width: fit-content;
-        }
-
-        .status-badge.correct {
-            background-color: var(--success-bg);
-            color: var(--success-text);
-            border: 1px solid var(--success-border);
-        }
-
-        .status-badge.incorrect {
-            background-color: var(--error-bg);
-            color: var(--error-text);
-            border: 1px solid var(--error-border);
-        }
-
-        .status-badge.warning {
-            background-color: var(--warning-bg);
-            color: var(--warning-text);
-            border: 1px solid var(--warning-border);
-        }
-
-        .explanation-box {
-            padding: 14px 16px;
-            border-radius: var(--radius-md);
-            font-size: 13px;
-            line-height: 1.6;
-        }
-
-        .explanation-box.user-choice-analysis {
-            background-color: #f8fafc;
-            border: 1px solid var(--border);
-            color: #334155;
-        }
-
-        .explanation-box.correct-key-analysis {
-            background-color: var(--info-bg);
-            border: 1px solid var(--info-border);
-            color: var(--info-text);
-        }
-
-        /* Bottom Sticky Footer */
-        .mobile-action-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border);
-            padding: 12px 16px;
-            z-index: 50;
-            box-shadow: 0 -4px 10px rgb(0 0 0 / 0.05);
-        }
-
-        .action-bar-content {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .status-text {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .submit-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: var(--radius-md);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: var(--shadow-sm);
-            width: 100%;
-            max-width: 220px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .submit-btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Summary Card */
-        .summary-card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
-            text-align: center;
-            margin-top: 30px;
-            display: none;
-            animation: slideUp 0.4s ease;
-        }
-
-        .score-circle {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 26px;
-            font-weight: 700;
-            margin: 0 auto 16px auto;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (min-width: 640px) {
-            body { padding-bottom: 40px; }
-            .hero-banner { padding: 32px; }
-            .hero-banner h1 { font-size: 26px; }
-            .question-card { padding: 24px; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Try Out UKPPPG PGSD 2024</title>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EEF1F4;--surf:#fff;--ink:#16223A;--mut:#5E6B80;--line:#D9DFE7;--acc:#2C4A8B;--accs:#E4EAF6;--ok:#1B7F63;--oks:#DDF1EA;--bad:#B8402F;--bads:#F8E3DF;--warn:#8A5A00;--warns:#FBF0D6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){color-scheme:dark;--bg:#0F1524;--surf:#182036;--ink:#E8ECF4;--mut:#93A0B8;--line:#2A3552;--acc:#8FB0F5;--accs:#22305A;--ok:#5BC9A3;--oks:#133A2E;--bad:#F08A78;--bads:#44201B;--warn:#E9B656;--warns:#3B2C0E}}
+:root[data-theme=dark]{color-scheme:dark;--bg:#0F1524;--surf:#182036;--ink:#E8ECF4;--mut:#93A0B8;--line:#2A3552;--acc:#8FB0F5;--accs:#22305A;--ok:#5BC9A3;--oks:#133A2E;--bad:#F08A78;--bads:#44201B;--warn:#E9B656;--warns:#3B2C0E}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 'Plus Jakarta Sans',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:20;padding:14px 18px 10px}
+.row{display:flex;justify-content:space-between;align-items:baseline;max-width:640px;margin:0 auto}
+.row b{font-weight:700;font-size:15px}.row span{color:var(--mut);font-size:13px}
+.bar{max-width:640px;margin:10px auto 0;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc);border-radius:4px;transition:width .5s cubic-bezier(.3,.7,.2,1)}
+main{max-width:640px;margin:0 auto;padding:6px 18px 150px}
+.card{background:var(--surf);border:1px solid var(--line);border-radius:20px;padding:22px 20px;animation:in .35s ease both}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hint{font-size:13px;color:var(--acc);font-weight:600;margin:0 0 10px}
+.q{font:400 20px/1.5 'Newsreader',Georgia,serif;margin:0 0 20px;white-space:pre-line}
+.opt{display:flex;gap:12px;width:100%;text-align:left;background:var(--bg);border:1.5px solid transparent;border-radius:14px;padding:13px 14px;margin:0 0 10px;font:inherit;color:inherit;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
+.opt:active{transform:scale(.985)}
+.opt .l{flex:none;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--mut);background:var(--surf);transition:.2s}
+.opt.on{border-color:var(--acc);background:var(--accs)}.opt.on .l{background:var(--acc);border-color:var(--acc);color:var(--surf)}
+.opt.key{border-color:var(--ok);background:var(--oks)}.opt.key .l{background:var(--ok);border-color:var(--ok);color:var(--surf)}
+.opt.bad{border-color:var(--bad);background:var(--bads)}.opt.bad .l{background:var(--bad);border-color:var(--bad);color:var(--surf)}
+.opt.miss{border-style:dashed}
+.opt:disabled{cursor:default}
+.tf{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--bg);border-radius:14px;padding:12px 14px;margin:0 0 10px}
+.tf p{margin:0;flex:1;font-size:15px}
+.pills{display:flex;gap:6px}
+.pill{border:1.5px solid var(--line);background:var(--surf);color:var(--mut);border-radius:20px;padding:6px 12px;font:600 13px inherit;font-family:inherit;cursor:pointer;transition:.2s}
+.pill.on{background:var(--acc);border-color:var(--acc);color:var(--surf)}
+.pill.key{background:var(--ok);border-color:var(--ok);color:var(--surf)}.pill.bad{background:var(--bad);border-color:var(--bad);color:var(--surf)}
+.pill:disabled{cursor:default}
+.go{width:100%;margin-top:6px;border:0;border-radius:14px;padding:14px;background:var(--acc);color:var(--surf);font:600 15px inherit;font-family:inherit;cursor:pointer;transition:opacity .2s}
+.go:disabled{opacity:.35;cursor:not-allowed}
+.exp{margin-top:18px;border-radius:16px;padding:16px;animation:in .4s ease both}
+.exp.ok{background:var(--oks)}.exp.no{background:var(--bads)}
+.exp h3{margin:0 0 6px;font-size:15px}.exp.ok h3{color:var(--ok)}.exp.no h3{color:var(--bad)}
+.exp p{margin:0 0 8px;font-size:14.5px}.exp .k{color:var(--mut);font-size:13.5px}
+.note{margin-top:10px;background:var(--warns);color:var(--warn);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);padding:10px 18px calc(10px + env(safe-area-inset-bottom,0px))}
+.dock div{max-width:640px;margin:0 auto;display:flex;gap:10px}
+.dock button{flex:1;border-radius:14px;padding:13px 10px;font:600 14.5px inherit;font-family:inherit;cursor:pointer;border:1.5px solid var(--line);background:var(--surf);color:var(--ink)}
+.dock .nx{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.dock button:disabled{opacity:.35}
+foot{display:block;text-align:center;color:var(--mut);font-size:13px;margin-top:26px}
+foot b{color:var(--ink)}
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(10,15,28,.5);display:none;align-items:flex-end}
+.sheet.show{display:flex}
+.sh{background:var(--surf);width:100%;max-width:640px;margin:0 auto;border-radius:24px 24px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom,0px));animation:up .3s cubic-bezier(.3,.7,.2,1)}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sh h2{margin:0 0 14px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.grid button{aspect-ratio:1;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);font:600 15px inherit;font-family:inherit;cursor:pointer}
+.grid .c{background:var(--ok);border-color:var(--ok);color:var(--surf)}.grid .w{background:var(--bad);border-color:var(--bad);color:var(--surf)}.grid .here{outline:2px solid var(--acc);outline-offset:2px}
+.sc{text-align:center;padding:30px 20px}
+.sc .n{font:600 64px/1 'Newsreader',serif}.sc p{color:var(--mut);margin:8px 0 0}
+.stats{display:flex;gap:10px;margin:22px 0 6px}.stats div{flex:1;background:var(--bg);border-radius:14px;padding:12px 6px;font-size:13px;color:var(--mut)}.stats b{display:block;font-size:22px;color:var(--ink)}
+.rv{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;border:0;background:var(--surf);border-bottom:1px solid var(--line);padding:13px 4px;font:inherit;color:inherit;cursor:pointer}
+.rv em{font-style:normal;font-size:13px;font-weight:600}.rv .c{color:var(--ok)}.rv .w{color:var(--bad)}.rv .s{color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+</style>
 </head>
 <body>
-
-    <!-- Header Navigation & Progress -->
-    <header class="app-header">
-        <div class="header-content">
-            <div class="brand-title">
-                <span>UKPPPG PGSD</span>
-                <span class="badge">SJT & PCK</span>
-            </div>
-            <div class="status-text" id="topProgressText">0 / 50 Terjawab</div>
-        </div>
-        <div class="progress-bar-container">
-            <div class="progress-bar-fill" id="progressBar"></div>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="container">
-        <div class="hero-banner">
-            <h1>Try Out UKPPPG PGSD 2024</h1>
-            <p>Simulasi Latihan Soal SJT & PCK. Pembahasan hanya akan muncul pada soal yang telah Anda isi.</p>
-        </div>
-
-        <form id="quizForm">
-            <div id="questionsWrapper"></div>
-
-            <!-- Score Summary Card -->
-            <div class="summary-card" id="summaryCard">
-                <div class="score-circle" id="scoreCircle">0%</div>
-                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Hasil Simulasi & Pembahasan</h2>
-                <p id="scoreDetail" style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;"></p>
-                <button type="button" class="submit-btn" style="margin: 0 auto; max-width: 100%;" onclick="resetQuiz()">Ulangi Latihan</button>
-            </div>
-        </form>
-    </main>
-
-    <!-- Bottom Action Bar (Mobile UX) -->
-    <div class="mobile-action-bar">
-        <div class="action-bar-content">
-            <div class="status-text" id="bottomStatus">Isi semua soal di atas</div>
-            <button type="button" class="submit-btn" onclick="checkAllAnswers()">
-                Periksa Pembahasan
-            </button>
-        </div>
-    </div>
-
-    <script>
-        const quizData = [
-            {
-                id: 1,
-                q: "Pada aktivitas pembelajaran di kelas, guru memberikan soal pada peserta didiknya sebagai berikut: jika suatu persegi panjang memiliki panjang sisi 15 cm dan lebar 10 cm, tentukan keliling persegi panjang tersebut. Jawaban siswa adalah 150cm², dengan alasan keliling persegi panjang adalah panjang dikalikan lebar. Penanganan yang tepat untuk mengatasi kesulitan peserta didik tersebut adalah memberikan ....",
-                options: [
-                    "Penjelasan ulang bahwa rumus keliling persegi panjang adalah panjang dikalikan lebar",
-                    "Pertanyaan pancingan terkait dengan rumus luas persegi panjang",
-                    "Scaffolding kepada peserta didik, cara menentukan keliling bangun persegi panjang",
-                    "Soal lebih sulit tentang menentukan keliling bangun persegi panjang",
-                    "Hukuman pada peserta didik yang mengalami kesalahan dalam menjawab"
-                ],
-                key: 2,
-                keyExp: "Kunci Jawaban C (Scaffolding): Memberikan bimbingan bertahap (scaffolding) membantu siswa menemukan konsep keliling secara tepat dari pemahaman dasarnya, tanpa langsung memberikan jawaban jadi.",
-                wrongExps: [
-                    "Opsi A Salah: Menyebutkan bahwa keliling adalah panjang dikali lebar justru memperkuat miskonsepsi (karena itu adalah rumus luas).",
-                    "Opsi B Salah: Hanya memberikan pertanyaan pancingan rumus luas belum menyelesaikan akar masalah miskonsepsi cara menghitung keliling.",
-                    "Opsi D Salah: Memberikan soal yang lebih sulit akan makin membebankan siswa yang konsep dasarnya saja masih keliru.",
-                    "Opsi E Salah: Memberikan hukuman tidak bersifat edukatif dan dapat menurunkan motivasi serta mental belajar siswa."
-                ]
-            },
-            {
-                id: 2,
-                q: "Seorang guru merancang pembelajaran dengan fokus peserta didik dapat menyusun laporan percobaan IPA sederhana. Model pembelajaran berbasis masalah (PBL) dipilih. Urutan sintaks PBL yang paling tepat dimulai dari...",
-                options: [
-                    "Mengorganisasikan peserta didik untuk belajar, orientasi masalah, membimbing penyelidikan, mengembangkan hasil karya, evaluasi",
-                    "Orientasi peserta didik pada masalah, mengorganisasikan peserta didik, membimbing penyelidikan individual maupun kelompok, mengembangkan dan menyajikan hasil karya, menganalisis dan mengevaluasi proses pemecahan masalah",
-                    "Menyajikan masalah, membentuk kelompok, melakukan eksperimen, menyimpulkan",
-                    "Menyajikan materi, tanya jawab, penugasan kelompok, tes evaluasi",
-                    "Merumuskan hipotesis, eksperimen, pengumpulan data, presentasi, kesimpulan"
-                ],
-                key: 1,
-                keyExp: "Kunci Jawaban B: Urutan sintaks baku Problem Based Learning (PBL) sesuai teori pedagogi adalah: (1) Orientasi masalah, (2) Mengorganisasikan belajar, (3) Membimbing penyelidikan, (4) Mengembangkan & menyajikan karya, (5) Menganalisis & mengevaluasi.",
-                wrongExps: [
-                    "Opsi A Salah: Sintaks tertukar, orientasi masalah seharusnya berada di tahap pertama sebelum mengorganisasikan peserta didik.",
-                    "Opsi C Salah: Istilah dan langkah yang digunakan terlalu umum dan bukan merupakan nomenklatur resmi sintaks PBL.",
-                    "Opsi D Salah: Ini merupakan langkah pembelajaran konvensional (direct instruction), bukan PBL.",
-                    "Opsi E Salah: Langkah ini merupakan metode ilmiah umum, bukan langkah sintaks baku model PBL."
-                ]
-            },
-            {
-                id: 3,
-                q: "Dalam pembelajaran berdiferensiasi di kelas IV SD, guru mendapati gaya belajar siswa yang beragam (visual, auditori, kinestetik). Tindakan profesional guru yang menunjukkan diferensiasi proses adalah...",
-                options: [
-                    "Memberikan tingkat kesulitan soal ujian yang berbeda untuk setiap anak",
-                    "Menyediakan berbagai media belajar seperti video untuk kelompok visual, rekaman suara untuk kelompok auditori, dan objek manipulatif untuk kelompok kinestetik",
-                    "Menurunkan KKM bagi siswa yang memiliki gaya belajar kinestetik",
-                    "Mengelompokkan siswa berdasarkan tingkat kecerdasan intelektual tertinggi",
-                    "Memberikan tugas rumah tambahan bagi siswa yang lambat belajar"
-                ],
-                key: 1,
-                keyExp: "Kunci Jawaban B: Diferensiasi proses berfokus pada variasi cara/moda siswa memproses informasi selama belajar (visual melalui video, auditori melalui rekaman audio, kinestetik melalui benda konkret).",
-                wrongExps: [
-                    "Opsi A Salah: Membedakan tingkat kesulitan soal ujian tanpa indikator yang jelas masuk dalam diferensiasi produk/penilaian, bukan proses.",
-                    "Opsi C Salah: Menurunkan standar KKM berdasarkan gaya belajar melanggar keadilan asesmen dan standar capaian.",
-                    "Opsi D Salah: Mengelompokkan berdasarkan IQ tertinggi dapat memicu diskriminasi dan kasta belajar di kelas.",
-                    "Opsi E Salah: Memberi beban tugas rumah tambahan bukan solusi diferensiasi, melainkan bentuk hukuman terselubung."
-                ]
-            },
-            {
-                id: 4,
-                q: "Sebagai seorang guru profesional, ketika menghadapi rekan sejawat yang sering datang terlambat dan mengabaikan tugas piket mengajar, sikap reflektif dan proporsional yang harus dilakukan adalah...",
-                options: [
-                    "Melapor langsung ke kepala sekolah tanpa konfirmasi",
-                    "Membiarkan saja karena bukan urusan pribadi",
-                    "Mengajak berbicara secara baik-baik dan persuasif secara pribadi untuk mengetahui kendala serta mengingatkan tanggung jawab bersama",
-                    "Menegur keras di depan guru-guru lain saat rapat",
-                    "Ikut-ikutan terlambat sebagai bentuk protes"
-                ],
-                key: 2,
-                keyExp: "Kunci Jawaban C: Mengajak berdiskusi secara personal dan bijaksana mencerminkan kompetensi sosial guru, yaitu menyelesaikan konflik antar sejawat secara komunikatif, kooperatif, dan bermartabat.",
-                wrongExps: [
-                    "Opsi A Salah: Melapor langsung tanpa komunikasi awal memperkeruh suasana kerja tim dan kurang beretika kolegial.",
-                    "Opsi B Salah: Membiarkan pembiaran tugas piket mengganggu kelancaran ekosistem dan ketertiban sekolah.",
-                    "Opsi D Salah: Menegur di depan umum mempermalukan rekan kerja dan merusak profesionalisme lingkungan sekolah.",
-                    "Opsi E Salah: Menerapkan perilaku buruk yang sama menunjukkan rendahnya integritas diri sebagai guru."
-                ]
-            },
-            {
-                id: 5,
-                q: "Penilaian autentik menuntut guru untuk menilai kesiapan siswa, proses, dan hasil belajar secara menyeluruh. Instrumen penilaian yang paling tepat untuk mengukur keterampilan psikomotorik merangkai alat listrik adalah...",
-                options: [
-                    "Tes tertulis pilihan ganda uraian singkat",
-                    "Lembar observasi unjuk kerja (praktik) menggunakan rubrik penilaian",
-                    "Tes lisan massal di akhir semester",
-                    "Angket sikap siswa terhadap pelajaran IPA",
-                    "Portofolio nilai ulangan harian"
-                ],
-                key: 1,
-                keyExp: "Kunci Jawaban B: Keterampilan psikomotorik (praktik merangkai) paling tepat diukur secara langsung menggunakan Lembar Observasi Unjuk Kerja berbasis rubrik terukur.",
-                wrongExps: [
-                    "Opsi A Salah: Tes tertulis hanya mengukur aspek kognitif (pengetahuan), bukan keterampilan fisik.",
-                    "Opsi C Salah: Tes lisan mengukur pemahaman verbal kognitif, tidak bisa membuktikan kecakapan merangkai alat secara fisik.",
-                    "Opsi D Salah: Angket sikap mengukur afektif (nilai/perasaan), bukan kemampuan praktik psikomotorik.",
-                    "Opsi E Salah: Portofolio ulangan harian hanya rekapitulasi nilai kognitif tertulis sebelumnya."
-                ]
-            }
-        ];
-
-        // Duplikasi & Generator otomatis untuk melengkapi total 50 Soal
-        for(let i = 6; i <= 50; i++) {
-            const baseIndex = (i - 1) % 5;
-            quizData.push({
-                id: i,
-                q: `[Soal Nomor ${i}] ${quizData[baseIndex].q}`,
-                options: [...quizData[baseIndex].options],
-                key: quizData[baseIndex].key,
-                keyExp: quizData[baseIndex].keyExp,
-                wrongExps: quizData[baseIndex].wrongExps
-            });
-        }
-
-        // Render Soal ke HTML
-        function renderQuiz() {
-            const wrapper = document.getElementById('questionsWrapper');
-            let html = '';
-
-            quizData.forEach((item, idx) => {
-                html += `
-                    <div class="question-card" id="card-${item.id}">
-                        <div class="question-meta">
-                            <span class="question-number">Soal ${idx + 1} dari ${quizData.length}</span>
-                        </div>
-                        <div class="question-text">${item.q}</div>
-                        <div class="options-group">
-                `;
-
-                item.options.forEach((opt, optIdx) => {
-                    const letter = String.fromCharCode(65 + optIdx);
-                    html += `
-                        <div class="option-item">
-                            <input type="radio" name="q_${item.id}" id="q_${item.id}_${optIdx}" value="${optIdx}" onchange="updateProgress()">
-                            <label class="option-label" for="q_${item.id}_${optIdx}">
-                                <div class="option-indicator"></div>
-                                <div><strong>${letter}.</strong> ${opt}</div>
-                            </label>
-                        </div>
-                    `;
-                });
-
-                html += `
-                        </div>
-                        <div class="explanation-wrapper" id="explanation_${item.id}">
-                            <div class="status-badge" id="badge_${item.id}"></div>
-                            <div class="explanation-box user-choice-analysis" id="userAnalysis_${item.id}"></div>
-                            <div class="explanation-box correct-key-analysis" id="keyAnalysis_${item.id}"></div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            wrapper.innerHTML = html;
-        }
-
-        function updateProgress() {
-            let answered = 0;
-            quizData.forEach(item => {
-                if (document.querySelector(`input[name="q_${item.id}"]:checked`)) {
-                    answered++;
-                }
-            });
-
-            const percent = (answered / quizData.length) * 100;
-            document.getElementById('progressBar').style.width = percent + '%';
-            document.getElementById('topProgressText').innerText = `${answered} / ${quizData.length} Terjawab`;
-            document.getElementById('bottomStatus').innerText = `${answered} dari ${quizData.length} soal diisi`;
-        }
-
-        function checkAllAnswers() {
-            let score = 0;
-
-            quizData.forEach(item => {
-                const selected = document.querySelector(`input[name="q_${item.id}"]:checked`);
-                const expWrapper = document.getElementById(`explanation_${item.id}`);
-                const badge = document.getElementById(`badge_${item.id}`);
-                const userAnalysis = document.getElementById(`userAnalysis_${item.id}`);
-                const keyAnalysis = document.getElementById(`keyAnalysis_${item.id}`);
-                const card = document.getElementById(`card-${item.id}`);
-
-                // JIKA JAWABAN KOSONG / BELUM DIPILIH
-                if (!selected) {
-                    expWrapper.style.display = 'none'; // Pembahasan tidak akan muncul
-                    card.style.borderColor = '#fecaca';
-                    return; // Lewati proses evaluasi soal ini
-                }
-
-                // JIKA SOAL DIISI, TAMPILKAN PEMBAHASAN
-                expWrapper.style.display = 'flex';
-                const userVal = parseInt(selected.value);
-                const userLetter = String.fromCharCode(65 + userVal);
-
-                if (userVal === item.key) {
-                    score++;
-                    badge.className = 'status-badge correct';
-                    badge.innerHTML = '✓ Jawaban Anda Benar';
-                    userAnalysis.innerHTML = `<strong>Analisis Pilihan Anda (${userLetter}):</strong> Tepat sekali! Pilihan yang Anda pilih sesuai dengan kaidah pedagogi yang berlaku.`;
-                    keyAnalysis.innerHTML = `<strong>Pembahasan Lengkap:</strong><br>${item.keyExp}`;
-                    card.style.borderColor = '#a7f3d0';
-                } else {
-                    badge.className = 'status-badge incorrect';
-                    badge.innerHTML = '✕ Jawaban Anda Salah';
-                    
-                    const wrongReason = item.wrongExps && item.wrongExps[userVal] ? item.wrongExps[userVal] : `Pilihan (${userLetter}) kurang tepat untuk kondisi soal ini.`;
-                    
-                    userAnalysis.innerHTML = `<strong>Analisis Mengapa Pilihan (${userLetter}) Salah:</strong><br>${wrongReason}`;
-                    keyAnalysis.innerHTML = `<strong>Kunci Jawaban yang Benar:</strong><br>${item.keyExp}`;
-                    card.style.borderColor = '#fecaca';
-                }
-            });
-
-            // Tampilkan Ringkasan Skor
-            const summaryCard = document.getElementById('summaryCard');
-            const percentage = Math.round((score / quizData.length) * 100);
-            
-            document.getElementById('scoreCircle').innerText = `${percentage}%`;
-            document.getElementById('scoreDetail').innerText = `Anda berhasil menjawab benar ${score} dari total ${quizData.length} soal. Pembahasan otomatis disembunyikan pada soal yang dikosongkan.`;
-            summaryCard.style.display = 'block';
-
-            summaryCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function resetQuiz() {
-            document.getElementById('quizForm').reset();
-            document.getElementById('summaryCard').style.display = 'none';
-            
-            quizData.forEach(item => {
-                const expWrapper = document.getElementById(`explanation_${item.id}`);
-                const card = document.getElementById(`card-${item.id}`);
-                expWrapper.style.display = 'none';
-                card.style.borderColor = 'var(--border)';
-            });
-
-            updateProgress();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.onload = renderQuiz;
-    </script>
+<div class="top"><div class="row"><b>Try Out UKPPPG PGSD</b><span id="ct"></span></div><div class="bar"><i id="pg"></i></div></div>
+<main id="m"></main>
+<div class="dock" id="dk"><div><button id="pv">Sebelumnya</button><button id="nm">Daftar soal</button><button id="nx" class="nx">Berikutnya</button></div></div>
+<div class="sheet" id="sh"><div class="sh"><h2>Daftar soal</h2><div class="grid" id="gr"></div></div></div>
+<script>
+var Q=[
+{t:'s',q:'Seorang guru menyadari bahwa beberapa siswa kerap melakukan aktivitas berisiko saat istirahat, seperti memanjat pagar atau berlari di area licin. Untuk menjaga keamanan mereka, guru sebaiknya:',o:['Mengarahkan siswa bermain di area yang aman dan mengenalkan permainan yang lebih aman dan menyenangkan.','Membiarkan siswa belajar dari pengalaman dengan asumsi mereka akan menyadari risikonya.','Mengajak orang tua berdiskusi mengenai masalah keselamatan ini dan meminta mereka memberi pemahaman kepada anak tentang risikonya.','Memberi teguran keras dan hukuman pada siswa yang terlibat untuk menekankan pentingnya keselamatan.','Mengarahkan siswa bermain di area yang aman dan mengenalkan permainan yang lebih aman dan menyenangkan.'],k:[2],e:'Keselamatan anak adalah tanggung jawab bersama. Melibatkan orang tua membuat pesan keselamatan konsisten di rumah dan di sekolah. Membiarkan (B) adalah kelalaian, dan hukuman keras (D) tidak mendidik.',n:'Opsi A dan E identik di sumber. Mengarahkan ke area bermain aman juga kuat secara pedagogis, jadi kunci C layak dicek ulang.'},
+{t:'s',q:'Seorang guru mendapati penurunan performa siswa pada satu mata pelajaran. Sekolah membentuk tim guru untuk merancang solusi. Langkah yang tepat bagi Anda sebagai bagian dari tim adalah:',o:['Menunggu instruksi dari ketua tim sebelum mengajukan ide atau tindakan.','Mengusulkan pertemuan mingguan untuk mengevaluasi kemajuan dan berbagi ide baru memperbaiki pembelajaran.','Membuat rencana pembelajaran mandiri dan menerapkannya sendiri tanpa berkoordinasi dengan tim.','Mengumpulkan data melalui survei atau wawancara siswa untuk mengidentifikasi penyebab penurunan, lalu menyampaikannya ke tim.','Hanya memberi masukan saat diminta oleh ketua atau anggota tim lain.'],k:[1],e:'Pertemuan rutin menjaga kolaborasi tetap berjalan: kemajuan dipantau dan ide dibagikan. Menunggu instruksi (A, E) bersifat pasif, dan bekerja sendiri (C) melewatkan kerja tim.',n:'Opsi D (mengumpulkan data penyebab) juga proaktif dan patut dipertimbangkan. Kunci sumber: B.'},
+{t:'s',q:'Seorang guru menyadari beberapa siswa kesulitan mengikuti pelajaran karena kurangnya dukungan dari rumah. Ia ingin membantu orang tua agar lebih efektif mendampingi anak. Langkah yang tepat adalah:',o:['Menyediakan modul belajar daring untuk diakses orang tua tanpa komunikasi langsung.','Mengadakan pertemuan rutin dengan orang tua untuk memberi panduan serta mendengarkan umpan balik tentang dukungan belajar di rumah.','Memberi tugas tambahan kepada siswa dengan harapan orang tua akan terlibat.','Mengirim pengingat mingguan kepada orang tua mengenai tugas yang harus diselesaikan anak.','Mengundang orang tua pada acara sekolah tertentu untuk menjelaskan pentingnya keterlibatan mereka.'],k:[1],e:'Komunikasi dua arah: guru memberi panduan dan juga mendengar kondisi keluarga, sehingga bantuannya tepat sasaran. Pilihan lain bersifat satu arah atau tidak berkelanjutan.'},
+{t:'s',q:'Untuk memperkaya pengalaman belajar siswa, seorang guru berencana melibatkan orang tua dan masyarakat. Langkah yang dapat diambil adalah:',o:['Mengundang orang tua hadir di acara tertentu tanpa melibatkan mereka secara rutin.','Menyusun semua materi sendiri, lalu meminta orang tua memastikan tugas siswa selesai di rumah.','Mengirim survei untuk mengetahui minat orang tua berpartisipasi tanpa menindaklanjutinya.','Mewawancarai orang tua untuk memahami keahlian mereka, kemudian menjadwalkan sesi berbagi di kelas.','Menyusun program berbasis proyek tanpa berkonsultasi dengan orang tua atau masyarakat.'],k:[3],e:'Wawancara memetakan keahlian nyata orang tua, lalu dijadwalkan sesi berbagi. Itu keterlibatan yang terencana dan bermakna. Opsi lain berhenti di tengah jalan atau tidak melibatkan mereka.'},
+{t:'s',q:'Seorang guru baru bergabung dengan organisasi profesi yang aktif menyelenggarakan kegiatan peningkatan kualitas pendidikan. Ia ingin berkontribusi secara efektif. Langkah yang seharusnya diambil adalah:',o:['Selalu hadir di setiap kegiatan dan menawarkan diri memimpin proyek yang membutuhkan penyelesaian masalah.','Hadir secara pasif tanpa memberikan kontribusi.','Menghadiri beberapa pertemuan, memilih proyek sesuai keahliannya, dan memberi ide serta solusi yang relevan.','Hadir hanya saat memiliki waktu luang tanpa terlibat dalam diskusi atau proyek.','Menjadi anggota tanpa terlibat aktif dalam kegiatan.'],k:[2],e:'Kontribusi efektif lahir dari kecocokan keahlian dan proyek, disertai gagasan yang relevan. Pasif (B, D, E) tidak memberi dampak, dan langsung memimpin semuanya (A) kurang realistis bagi anggota baru.'},
+{t:'s',q:'Bu Ana, pengelola dana BOS, diminta kepala sekolah membuat kuitansi kosong. Ia kemudian mengetahui kuitansi itu dipakai untuk laporan pembelian yang tidak sesuai. Sebagai Bu Ana, pilihan yang mungkin diambil adalah:',o:['Menyampaikan ketidaknyamanan kepada kepala sekolah terkait tindakan yang tidak etis.','Membiarkan situasi tersebut dan menganggapnya tanggung jawab kepala sekolah.','Menulis tentang masalah ini di media sosial agar mendapat tekanan publik.','Membicarakannya dengan rekan guru karena bingung menghadapi situasi tersebut.','Menyesali tindakan mematuhi perintah kepala sekolah tanpa berpikir kritis.'],k:[0],e:'Integritas dimulai dari menyampaikan keberatan secara langsung dan santun kepada pihak yang bersangkutan. Membiarkan, membuka di media sosial, atau sekadar bergosip tidak menyelesaikan masalah.'},
+{t:'s',q:'Pak Rio mengalami masalah di tempat kerja baru: ada rekan yang kurang ramah dan sering menyebarkan gosip tentangnya. Jika Anda Pak Rio, langkah yang diambil adalah:',o:['Melaporkan rekan tersebut ke kepala sekolah agar ditindak.','Mengajak bicara secara pribadi untuk menyelesaikan masalah dengan damai.','Menegur keras rekan tersebut karena sudah tidak tahan.','Mengabaikan dan tidak bereaksi terhadap fitnah tersebut.','Membalas dengan membicarakan keburukan rekan tersebut.'],k:[1],e:'Konflik antarrekan sebaiknya diselesaikan dulu lewat dialog pribadi yang damai. Melapor langsung, menegur keras, mengabaikan, atau membalas bukan langkah awal yang konstruktif.'},
+{t:'s',q:'Pak Putera sedang menyiapkan materi pembelajaran digital, namun kepala sekolah memintanya menyelesaikan entri nilai rapor. Jika Anda di posisi Pak Putera, Anda mungkin akan:',o:['Mengutamakan materi digital karena penting, sementara entri nilai bisa ditunda.','Memprioritaskan entri nilai karena merupakan permintaan langsung kepala sekolah.','Meminta bantuan orang lain untuk entri nilai agar tetap fokus pada materi digital.','Tetap fokus menyusun materi digital karena dianggap tugas utama seorang pendidik.','Mengutamakan entri nilai karena instruksi langsung, sedangkan materi bisa diambil dari buku yang ada.'],k:[3],e:'Menurut kunci sumber, penyusunan materi pembelajaran adalah inti tugas pendidik sehingga tetap diprioritaskan.',n:'Kunci ini kurang meyakinkan: nilai rapor punya tenggat resmi, dan opsi C (meminta bantuan agar keduanya selesai) lebih realistis. Verifikasi ulang sebelum dijadikan pegangan.'},
+{t:'s',q:'Seorang rekan guru sering mengejek logat siswa dari suku tertentu, yang bertentangan dengan kode etik profesi. Sebagai guru yang memahami etika, tindakan Anda adalah:',o:['Melaporkan perilaku tersebut kepada kepala sekolah untuk dibahas dalam rapat.','Menegur secara pribadi dan mengingatkan pentingnya mematuhi kode etik.','Membalas dengan meniru logat rekan tersebut agar ia sadar.','Mengabaikan karena merasa itu bukan urusan Anda.','Menegur dengan keras agar rekan tersebut jera.'],k:[1],e:'Teguran pribadi yang mengingatkan kode etik adalah langkah pertama yang beradab. Meniru atau menegur keras memperburuk keadaan, dan mengabaikan berarti membiarkan diskriminasi.'},
+{t:'s',q:'Dari hasil analisis, kemampuan siswa terbagi menjadi tiga kelompok: pandai, sedang, dan kurang. Agar pembelajaran efektif, tindakan yang dapat dilakukan adalah:',o:['Membentuk kelompok berisi siswa berkemampuan berbeda untuk meningkatkan kolaborasi.','Membiarkan siswa bekerja bersama tanpa bimbingan guru dengan harapan saling membantu.','Mengelompokkan siswa secara campuran dan memberikan bimbingan menyeluruh.','Membiarkan siswa memilih kelompok sendiri.','Mengelompokkan siswa berdasarkan kemampuan agar lebih fokus sesuai level.'],k:[2],e:'Kelompok campuran memungkinkan tutor sebaya, dan bimbingan menyeluruh memastikan semua siswa terpantau. Tanpa bimbingan (B, D) hasilnya tidak terjamin.',n:'Opsi A hampir sama dengan C; pembedanya hanya ada tidaknya bimbingan menyeluruh.'},
+{t:'b',q:'Dalam pelajaran Bahasa Indonesia kelas II SD, guru berfokus pada kemampuan berbicara santun. Salah satu siswa, Tania, kurang antusias dan sering menghindari latihan berbicara.\n\nTentukan benar atau salah untuk setiap langkah berikut untuk membantu Tania.',o:['Menunjukkan video anak bercerita di depan kelas untuk membangun rasa percaya diri.','Belajar sambil bermain berpasangan atau berkelompok untuk membangkitkan rasa ingin tahu.','Menjelaskan pentingnya keterampilan berbicara.','Memberikan berbagai media dan lembar kerja agar Tania lebih nyaman.','Menyampaikan teknik bercerita yang sederhana dan efektif.'],k:[1,1,1,1,1],e:'Kelima langkah mendukung Tania: contoh visual membangun percaya diri, bermain berpasangan memunculkan rasa ingin tahu, pemahaman manfaat berbicara memberi alasan berlatih, media beragam membuatnya nyaman, dan teknik sederhana memudahkannya mulai.'},
+{t:'s',q:'Di kelas lain, Pak Dani kesulitan di akhir pelajaran karena murid cenderung diam saat ditanya. Mereka tampak enggan menjawab dan hanya saling berpandangan. Tindakan yang tepat untuk Pak Dani adalah:',o:['Mengizinkan murid keluar sebentar untuk menyegarkan diri.','Memberikan kesempatan kepada murid untuk bertanya.','Memanggil murid satu per satu untuk menjawab pertanyaan.','Meminta murid menulis pertanyaan.','Mengelompokkan murid untuk berdiskusi.'],k:[1],e:'Murid yang diam sering ragu atau takut salah. Memberi ruang bertanya menciptakan rasa aman dan membuka interaksi. Memanggil satu per satu bisa menambah tekanan.',n:'Opsi D (menulis pertanyaan) juga bisa membantu siswa pemalu. Kunci sumber: B.'},
+{t:'m',q:'Seorang guru ingin mengajarkan dampak letak geografis Indonesia terhadap alam sekaligus meningkatkan literasi siswa. Langkah yang dapat dilakukan, antara lain:',o:['Memberi waktu 15 menit untuk membaca buku dan membuat ringkasan.','Mengadakan diskusi dan presentasi terkait letak geografis Indonesia.','Menyediakan instrumen untuk mengukur pemahaman siswa tentang dampak letak geografis.','Meminta siswa mencari informasi dari berbagai sumber terkait.','Mengadakan diskusi dari hasil referensi tentang letak geografis.'],k:[1,2,3,4],e:'Diskusi dan presentasi melatih literasi lisan, instrumen mengukur pemahaman, pencarian dari banyak sumber melatih literasi informasi, dan diskusi hasil referensi memperdalam materi. Opsi A hanya membaca dan meringkas tanpa kaitan dengan dampak geografis.'},
+{t:'m',q:'Untuk meningkatkan kemampuan numerasi siswa, guru dapat menciptakan lingkungan belajar yang mendukung dengan cara berikut:',o:['Menyajikan materi dalam bentuk teks visual yang jelas.','Menggunakan alat peraga untuk memvisualisasikan konsep numerasi.','Menyediakan lembar kerja yang sesuai dengan perbedaan kemampuan siswa.','Menggunakan buku teks sebagai bahan utama.','Memberi penjelasan umum dengan minim konsep numerasi.'],k:[1,2],e:'Alat peraga membuat konsep abstrak menjadi konkret, dan lembar kerja berjenjang melayani perbedaan kemampuan. Buku teks saja (D) dan penjelasan minim konsep (E) tidak mendukung.'},
+{t:'s',q:'Materi yang dipilih untuk mendukung pemahaman numerasi siswa juga harus tepat. Pilihan yang dapat diambil adalah:',o:['Mengajarkan rumus matematika abstrak.','Memberi latihan hitung berulang tanpa variasi.','Fokus pada literasi di atas numerasi.','Memperkenalkan metode pemecahan masalah matematika.','Menjelaskan pentingnya kemampuan numerasi.'],k:[3],e:'Numerasi tumbuh lewat pemecahan masalah kontekstual, bukan hafalan rumus atau drill monoton.'},
+{t:'s',q:'Seorang murid sering mengganggu kelas karena masalah pribadi di rumah. Langkah sesuai nilai moral dan spiritual adalah:',o:['Mengajak murid berbicara setelah kelas untuk memahami situasinya dan mencari solusi bersama.','Meminta murid keluar sementara untuk merenungkan tindakannya.','Menegur murid di depan kelas untuk memberi contoh.','Melaporkan masalah kepada kepala sekolah dan orang tua.','Membiarkan murid tersebut dan fokus ke pelajaran.'],k:[0],e:'Pendekatan empatik dan personal menjaga martabat murid serta menggali akar masalah. Teguran di depan kelas mempermalukan.'},
+{t:'m',q:'Jika mengetahui kolega memberi penilaian tidak adil karena alasan pribadi, langkah sesuai kode etik adalah:',o:['Mengabaikan masalah ini.','Melaporkan secara anonim kepada komite etik.','Mengajak rekan berdiskusi untuk memperbaiki penilaian.','Membicarakan masalah dengan kepala sekolah.','Menegur kolega di depan orang lain.'],k:[2,3],e:'Dialog langsung dan pelibatan pimpinan adalah jalur yang tepat. Mengabaikan atau mempermalukan di depan umum melanggar etika kolegial.'},
+{t:'s',q:'Setelah menyadari metode pengajaran kurang efektif, guru dapat merefleksikan diri dan mengambil langkah:',o:['Mencari metode baru tanpa melibatkan siswa.','Meminta umpan balik siswa dan rekan untuk merancang strategi baru.','Menganggap metode saat ini sudah baik.','Menggunakan refleksi sebagai evaluasi untuk semester berikutnya.','Mengikuti pelatihan profesional dan menerapkan hasilnya.'],k:[1],e:'Umpan balik dari siswa dan rekan memberi data nyata untuk memperbaiki praktik.',n:'Opsi E (pelatihan lalu menerapkan) juga baik. Kunci sumber: B.'},
+{t:'s',q:'Setelah mengikuti pelatihan, guru dapat menerapkan metode baru untuk meningkatkan kualitas pembelajaran dengan:',o:['Menyimpan metode untuk digunakan nanti.','Memilih metode yang relevan dengan kebutuhan siswa.','Menerapkan semua metode tanpa pertimbangan.','Menerapkan metode baru tanpa evaluasi.'],k:[1],e:'Metode dipilih berdasarkan kebutuhan siswa, bukan sekadar karena baru.'},
+{t:'m',q:'Jika ada siswa yang kesulitan mengikuti pelajaran, guru dapat mengambil tindakan berikut untuk meningkatkan interaksi aktif:',o:['Memberi tugas kelompok dan dukungan saat diperlukan.','Memberi kuis singkat di awal pelajaran, namun tetap memakai metode tradisional.','Memberi sesi tanya jawab di akhir pelajaran.','Menyediakan sesi bimbingan di luar jam pelajaran.','Menggunakan metode ceramah dengan contoh praktis.'],k:[0,3],e:'Tugas kelompok mendorong interaksi, dan bimbingan tambahan menolong siswa yang tertinggal.'},
+{t:'m',q:'Bu Neni merumuskan tujuan pembelajaran tentang persatuan dan kebersamaan. Tujuan yang menitikberatkan pada pengembangan sikap siswa adalah:',o:['Siswa mampu merumuskan hubungan antarsila Pancasila melalui diskusi kelompok.','Siswa menunjukkan sikap menghargai pendapat saat berdiskusi tentang pentingnya kebersamaan dan persatuan.','Siswa dapat menyusun laporan tentang pentingnya kebersamaan dengan mencari informasi di internet.','Siswa mampu menulis laporan tentang arti penting kebersamaan melalui penjelajahan informasi daring.','Siswa bisa menunjukkan kemandirian melalui permainan peran yang menggambarkan makna persatuan.'],k:[1,4],e:'Tujuan sikap memakai kata kerja perilaku seperti menunjukkan sikap menghargai dan menunjukkan kemandirian. Opsi lain menyasar pengetahuan atau keterampilan.'},
+{t:'s',q:'Guru kelas IV mengajar Pendidikan Pancasila tentang UUD 1945 dengan fokus hak dan kewajiban siswa. Dalam pembelajaran berbasis proyek, tindakan guru yang tepat adalah:',o:['Memilih proyek yang relevan dengan minat dan tahap perkembangan siswa.','Menilai proyek berdasarkan hasil yang seragam dari semua siswa.','Memberi proyek sesuai keinginan siswa.','Mengarahkan proyek sesuai lembar kerja yang sudah ditetapkan.','Membiarkan siswa menyusun rencana proyek sendiri.'],k:[0],e:'Proyek bermakna bila sesuai minat dan perkembangan siswa. Hasil seragam atau skrip kaku mematikan kreativitas.'},
+{t:'s',q:'Pak Putra mengajarkan keragaman budaya dengan pendekatan berpusat pada siswa; di kelasnya ada siswa bergaya belajar auditori dan kinestetik. Ia menyusun materi yang:',o:['Mempermudah guru mengevaluasi siswa.','Mempermudah guru dalam mengajar.','Menyediakan informasi lebih banyak dalam waktu singkat.','Memenuhi kebutuhan berbagai gaya belajar dan menjadikan pembelajaran lebih menarik.','Menjamin penyampaian materi lebih cepat dan mudah dipahami.'],k:[3],e:'Pembelajaran berdiferensiasi berpihak pada kebutuhan siswa, bukan kemudahan guru.'},
+{t:'s',q:'Guru menyusun modul IPA kelas V. Siswa A tertarik sains alam, siswa B lebih berminat pada lingkungan. Guru dapat menyesuaikan modul dengan:',o:['Mengabaikan minat siswa dan memakai materi standar.','Menyediakan modul terpisah untuk siswa A dan B.','Menggabungkan konsep sains alam dan lingkungan dalam satu modul.','Meminta siswa A mengajarkan materi kepada siswa B.','Menyederhanakan tingkat kesulitan agar sesuai keduanya.'],k:[2],e:'Satu modul yang memadukan kedua minat melayani semua siswa secara efisien dan tetap utuh.'},
+{t:'s',q:'Bu Novita mengajar IPA kelas V: Toni suka mendengar, Sekar visual, Jajat belajar dengan eksperimen. Cara terbaik mengembangkan konten untuk ketiganya adalah:',o:['Memberi penjelasan lisan yang rinci.','Memakai gambar dan diagram tanpa penjelasan lisan.','Menyediakan LKPD eksperimen dengan tambahan media audio dan visual.','Mengintegrasikan penjelasan lisan, visual, dan eksperimen dalam materi.','Menugaskan laporan panjang sebagai metode evaluasi.'],k:[3],e:'Integrasi ketiga modalitas dalam satu materi menjangkau semua gaya belajar sekaligus.',n:'Opsi C hampir sama, tetapi menempatkan audio-visual sebagai tambahan. Pembedanya tipis.'},
+{t:'s',q:'Saat memahami ide pokok teks informatif, siswa kelas III berkemampuan kognitif di bawah rata-rata sering tertinggal. Strategi yang dapat diterapkan guru adalah:',o:['Memberikan pengayaan.','Melakukan percepatan.','Memadatkan materi.','Memberikan pemodelan.','Menggunakan pendekatan komunikatif.'],k:[4],e:'Menurut kunci sumber, pendekatan komunikatif membuat siswa aktif berinteraksi dengan teks.',n:'Kunci meragukan: pemodelan (D) lazim untuk siswa yang butuh contoh konkret. Pengayaan, percepatan, dan pemadatan jelas keliru untuk siswa yang tertinggal.'},
+{t:'m',q:'Dalam kelas dengan tiga siswa tunanetra, guru menyesuaikan konten pembelajaran. Penyesuaian yang bisa dilakukan adalah:',o:['Menyediakan bahan ajar berupa buku audio untuk ketiga siswa.','Membuat rangkuman materi dalam format tulisan yang bisa diakses mereka.','Menggunakan materi pembelajaran dari luar negeri.','Mengalihbahasakan materi ke aplikasi yang dapat diakses mereka.','Memberi penjelasan kepada siswa sebelum melanjutkan pembelajaran untuk seluruh kelas.'],k:[1,3],e:'Menurut kunci sumber, materi dialihkan ke format dan aplikasi yang dapat diakses siswa.',n:'Kunci meragukan: buku audio (A) justru paling nyata bagi tunanetra, sedangkan format tulisan hanya berguna bila berupa braille. Verifikasi ulang.'},
+{t:'s',q:'Guru IPA kelas V ingin mengintegrasikan teknologi untuk menjelaskan perubahan permukaan bumi akibat faktor alam dan manusia. Penggunaan teknologi yang efektif adalah:',o:['Menyalin catatan dari layar proyektor ke buku siswa.','Memakai aplikasi papan tulis virtual yang membagikan materi, contoh, dan kuis kepada siswa.','Menonton video media sosial lalu menuliskannya di buku.','Mencetak seluruh materi dalam PDF untuk dibaca fisik.','Menyimpan semua materi di penyimpanan daring dan memberi tautan kepada siswa.'],k:[1],e:'Teknologi efektif bila interaktif: materi, contoh, dan kuis terintegrasi dalam satu alat.'},
+{t:'s',q:'Modul ajar IPAS kelas V tentang struktur dan fungsi tumbuhan memuat indikator soal level kognitif C4. Siswa diharapkan mampu:',o:['Menggambar tumbuhan dengan detail yang benar.','Menyebutkan berbagai jenis tumbuhan dengan rinci.','Menganalisis bagian-bagian tumbuhan dan menjelaskan fungsinya secara mendalam.','Menanam tumbuhan di kebun sekolah dengan benar.','Menuliskan manfaat tumbuhan bagi lingkungan secara rinci.'],k:[2],e:'C4 adalah menganalisis. Menyebutkan masuk C1, menggambar dan menanam keterampilan, menuliskan manfaat C2.'},
+{t:'b',q:'Untuk meningkatkan motivasi belajar siswa kelas V, Bu Indah memasukkan unsur permainan tradisional dalam pembelajaran IPA tentang rantai makanan.\n\nTentukan benar atau salah untuk setiap permainan tradisional yang dapat digunakan.',o:['Dakon (congklak)','Ular naga','Bentengan','Bekel','Lompat karet'],k:[1,1,1,1,1],e:'Semua permainan tradisional dapat dimodifikasi menjadi media belajar, misalnya mencocokkan kartu produsen dan konsumen atau menjalankan peran dalam rantai makanan.'},
+{t:'s',q:'Bu Riri merencanakan observasi lingkungan sekolah; murid mengamati tanaman yang layu di halaman. Pendekatan yang tepat untuk melatih pemecahan masalah dan berpikir kritis adalah dengan:',o:['Mengidentifikasi masalah terlebih dahulu.','Merumuskan langkah-langkah penyelesaian.','Menangani masalah tanaman yang layu.','Mengevaluasi solusi agar tanaman kembali subur.','Membuat kesimpulan tentang penyebab layunya tanaman.'],k:[0],e:'Pemecahan masalah dimulai dari mengenali dan merumuskan masalah, baru langkah berikutnya.'},
+{t:'m',q:'Murid diminta menceritakan kembali kisah “Kelinci Kecil dan Burung Pipit” dengan bahasa sendiri, dan guru mencatat tanggapan murid lain. Jenis asesmen yang sesuai adalah asesmen:',o:['Antarteman dengan ceklis performa bercerita.','Tertulis melalui soal pilihan ganda dan esai tentang cerita.','Portofolio yang mengevaluasi tugas terbaik siswa.','Proyek dengan indikator dari persiapan hingga presentasi.','Kinerja dengan skala penilaian yang diisi siswa lain.'],k:[0,4],e:'Bercerita adalah kinerja lisan, dan tanggapan teman dikumpulkan lewat penilaian sejawat berupa ceklis atau skala.'},
+{t:'s',q:'Pak Rico, guru kelas IV, memberi tugas esai agar murid mengembangkan argumen dan mencari sumber valid. Evaluasi yang digunakan untuk mencapai tujuan ini adalah:',o:['Formatif.','Sumatif.','Portofolio.','Diagnostik.','Proyek.'],k:[0],e:'Menurut kunci sumber, tugas dalam proses pembelajaran bertujuan memberi umpan balik sehingga tergolong formatif.',n:'Kunci ini diperdebatkan: tugas esai juga bisa berupa asesmen kinerja atau proyek. Verifikasi ulang.'},
+{t:'s',q:'Setelah mengajar dua jam pelajaran, guru ingin menilai apakah materi dipahami murid. Metode paling objektif untuk mengukur pemahaman adalah memberikan:',o:['Tes tulis berupa soal uraian.','Tes tulis berupa soal pilihan ganda.','Tes tulis berupa pertanyaan reflektif.','Tes tulis dengan cara menjawab langsung.','Tes tulis berupa soal uraian terbuka.'],k:[4],e:'Menurut kunci sumber, soal uraian terbuka menggali pemahaman murid secara mendalam.',n:'Kunci meragukan: secara teori pilihan ganda paling objektif karena penskorannya tidak bergantung penilai. Verifikasi ulang.'},
+{t:'m',q:'Guru mengajarkan membaca suku kata berawalan huruf b. Setelah pelajaran, sebagian besar murid mencapai tujuan. Umpan balik yang tepat adalah:',o:['Memberi tahu siswa untuk mengikuti lomba.','Memastikan apakah jawaban siswa benar atau salah.','Memotivasi siswa untuk melanjutkan ke materi berikutnya.','Memberi strategi berbicara yang lebih efektif dan tepat.','Memberi pujian atas pencapaian tersebut.'],k:[2,3,4],e:'Umpan balik yang baik memuat penguatan, motivasi, dan petunjuk perbaikan. Sekadar benar atau salah (B) terlalu miskin informasi.'},
+{t:'s',q:'Jika tujuan pembelajaran adalah melatih keterampilan menyajikan laporan melalui presentasi tentang makna kebhinekaan, instrumen evaluasi yang paling tepat adalah:',o:['Melakukan observasi saat diskusi berlangsung.','Membuat rubrik penilaian untuk laporan tertulis.','Menyusun rubrik untuk menilai presentasi yang diberikan siswa.','Melakukan wawancara untuk mengevaluasi hasil presentasi.','Mengembangkan rubrik khusus untuk penilaian diskusi.'],k:[2],e:'Instrumen harus selaras dengan tujuan: yang dilatih adalah presentasi, jadi rubrik menilai presentasi.'},
+{t:'s',q:'Bu Ani, guru Bahasa Indonesia kelas III, ingin menilai kemampuan murid merespons informasi penting dari bacaan. Evaluasi yang sesuai adalah:',o:['Tes tertulis dengan pertanyaan terkait bacaan.','Tes kinerja yang meminta siswa menuliskan informasi penting dari teks yang dibaca.','Proyek yang mengumpulkan data penting terkait teks.','Portofolio berisi bacaan lain terkait teks.','Tugas mencatat informasi penting dari teks.'],k:[1],e:'Kemampuan merespons teks paling tepat dinilai lewat kinerja langsung menuliskan informasi pentingnya.'},
+{t:'s',q:'Di fase A, guru mengenalkan kata berawalan h lewat video lagu anak, ejaan kata “hati-hati”, gambar binatang berawalan h, dan tugas mencatat benda berawalan h di sekitar. Mengapa strategi ini sesuai perkembangan kognitif anak SD?',o:['Materi sesuai kebutuhan belajar siswa.','Materi disampaikan secara konkret dan berdasarkan pengalaman nyata siswa.','Siswa mengamati sebelum mempraktikkan.','Pembelajaran mengeja dihubungkan dengan kemampuan dasar membaca.','Audio, video, dan ilustrasi memudahkan anak memahami.'],k:[1],e:'Anak SD berada pada tahap operasional konkret, sehingga belajar paling baik dari objek dan pengalaman nyata.'},
+{t:'s',q:'Bu Intan menjelaskan Pancasila sebagai dasar negara. Tujuan pembelajaran untuk aspek sikap yang relevan adalah:',o:['Melalui observasi lingkungan, siswa menganalisis nilai Pancasila dalam kehidupan sehari-hari dengan tepat.','Melalui diskusi, siswa menyampaikan nilai-nilai Pancasila dalam kehidupan sehari-hari dengan benar.','Melalui observasi lingkungan, siswa menunjukkan sikap saling menghargai sesuai nilai Pancasila dalam kehidupan sehari-hari.','Melalui observasi lingkungan, siswa menjelaskan sikap sesuai sila pertama dengan tepat.','Melalui gambar, siswa menganalisis nilai Pancasila dalam kehidupan sehari-hari dengan benar.'],k:[2],e:'Tujuan sikap memakai kata kerja “menunjukkan sikap”. Menganalisis, menyampaikan, dan menjelaskan menyasar pengetahuan.'},
+{t:'s',q:'Salah satu elemen fase B adalah “mendeskripsikan keragaman budaya dan upaya pelestariannya”. Tujuan pembelajaran yang tepat adalah:',o:['Siswa mampu menguraikan berbagai jenis tari di Indonesia.','Siswa bisa membandingkan berbagai kebudayaan di Indonesia.','Siswa mampu menggambar keragaman budaya di lingkungan sekitar.','Siswa mampu menciptakan tarian baru sesuai budaya daerahnya.','Siswa mampu menunjukkan sikap menghargai keragaman budaya.'],k:[0],e:'Menguraikan selaras dengan mendeskripsikan, dan jenis tari adalah contoh keragaman budaya.',n:'Menurut kunci sumber. Opsi B dan E juga berkaitan dengan elemen, jadi pilihan ini cukup tipis bedanya.'},
+{t:'s',q:'Guru memberi soal: persegi panjang panjang 15 cm, lebar 10 cm, berapa kelilingnya? Siswa menjawab 150 cm² karena keliling dihitung dengan mengalikan panjang dan lebar. Solusi efektif untuk siswa yang salah serupa adalah:',o:['Menjelaskan kembali bahwa rumus keliling tidak memakai perkalian panjang dan lebar.','Memberi pertanyaan pemancing tentang rumus luas persegi panjang.','Memberi panduan langkah demi langkah (scaffolding) untuk menghitung keliling.','Memberi soal yang lebih sulit tentang keliling.','Menghukum siswa yang salah menjawab.'],k:[1],e:'Siswa tertukar antara luas dan keliling. Pertanyaan pemancing membuatnya membedakan sendiri kedua konsep, bukan sekadar diberi tahu.',n:'Opsi C (scaffolding) juga sah. Kunci sumber: B.'},
+{t:'m',q:'Guru ingin siswa memahami rumus luas segitiga dengan pendekatan yang menitikberatkan pada siswa. Skenario yang sesuai:',o:['Siswa dibagi lima kelompok, tiap siswa menyelesaikan soal sendiri lalu mengumpulkan hasilnya.','Siswa dibagi lima kelompok dengan soal sama, berdiskusi, satu kelompok presentasi, kelompok lain menanggapi, guru menguatkan.','Guru menjelaskan rumus, lalu siswa mengerjakan latihan individu dan mengumpulkan hasilnya.','Siswa dibagi lima kelompok dengan lembar kerja, berdiskusi, satu kelompok presentasi, kelompok lain memberi masukan, guru menutup dengan penguatan.','Siswa bekerja berpasangan menghitung luas, satu siswa presentasi, siswa lain menanggapi, guru mengklarifikasi.'],k:[1,3,4],e:'Ketiganya melibatkan diskusi, presentasi, dan tanggapan teman, dengan guru sebagai penguat di akhir. Opsi A dan C berpusat pada guru atau kerja individu.'},
+{t:'s',q:'Bu Wati merencanakan pembelajaran kolaboratif tentang luas lingkaran agar siswa bertanggung jawab, mandiri, dan bekerja sama tanpa paksaan atau perundungan. Model ini memberi kesempatan siswa untuk:',o:['Merasa aman dan nyaman selama proses belajar.','Mengikuti nilai agama dan menjaga kerukunan antarumat.','Menjadi jujur dan menghindari menyontek.','Tekun dan serius belajar di sekolah maupun di rumah.','Mendahulukan kepentingan kelompok dibanding pribadi.'],k:[0],e:'Tanpa paksaan dan perundungan berarti lingkungan belajar yang aman dan nyaman.'},
+{t:'s',q:'Siswa mengamati gambar segitiga dari setengah persegi panjang, menghitung tingginya, lalu membandingkan luasnya dengan persegi panjang. Tujuan kegiatan ini adalah membantu siswa menemukan:',o:['Rumus luas persegi panjang.','Rumus tinggi segitiga.','Panjang sisi segitiga sama sisi.','Rumus luas segitiga.','Rumus keliling segitiga.'],k:[3],e:'Luas segitiga adalah setengah luas persegi panjang yang membentuknya, sehingga siswa menemukan rumus luas segitiga.'},
+{t:'s',q:'Guru SD di dekat peternakan ikan merancang pembelajaran volume balok dengan mengamati kolam ikan berbentuk balok dan mengukur panjang, lebar, dan kedalamannya. Pendekatan ini relevan dengan lingkungan karena:',o:['Siswa mengamati langsung kolam ikan berbentuk balok, lalu menghitung volumenya.','Guru menjelaskan cara menghitung volume di dalam kelas dan memberi latihan.','Guru menampilkan slide tentang bentuk balok dan cara menghitung volumenya.','Guru mengajak siswa berdiskusi di kelas tentang soal volume balok.','Guru menunjukkan video renang dan meminta siswa menghitung volume kolam renang.'],k:[0],e:'Pembelajaran kontekstual memakai objek nyata di sekitar siswa, bukan media tiruan.'},
+{t:'s',q:'Tujuan pembelajaran: siswa mampu menjelaskan hak dan kewajiban warga negara sesuai UUD 1945 dan menerapkannya sehari-hari. Media teknologi yang sesuai adalah:',o:['Gambar di situs web yang menampilkan orang membayar pajak.','Diagram hak dan kewajiban warga negara dari internet.','Infografis hak dan kewajiban warga negara menurut UUD 1945.','Video yang menunjukkan penerapan hak dan kewajiban warga negara di masyarakat.','Buku cerita digital tentang hak dan kewajiban warga negara.'],k:[3],e:'Video memperlihatkan penerapan nyata sehingga mendukung tujuan “menerapkan”, bukan sekadar mengetahui.'},
+{t:'s',q:'Dalam tujuan pembelajaran “melalui penggunaan media, siswa dapat menentukan jaring-jaring balok”, media yang paling tepat adalah:',o:['Presentasi yang menunjukkan bentuk jaring-jaring balok.','Gambar jaring-jaring balok di papan tulis.','Gambar jaring-jaring balok di atas kertas berpetak.','Kerangka balok dari kawat.','Balok kertas yang bisa dibuka menjadi jaring-jaring.'],k:[4],e:'Siswa bisa membuka dan melipat sendiri, sehingga menemukan jaring-jaring secara langsung dan konkret.'},
+{t:'s',q:'Guru kelas IV ingin mengajarkan penerapan nilai Pancasila dalam kehidupan sehari-hari. Media pembelajaran kreatif yang sesuai adalah:',o:['Papan tulis untuk menjelaskan nilai Pancasila.','Bagan materi penerapan nilai Pancasila.','Video yang menunjukkan penerapan nilai Pancasila dalam kehidupan sehari-hari.','Permainan yang melibatkan siswa aktif.','Kuis interaktif agar siswa terlibat aktif.'],k:[2],e:'Video menampilkan contoh perilaku nyata yang bisa diamati dan ditiru siswa.',n:'Opsi D dan E juga kreatif; kunci sumber: C.'},
+{t:'s',q:'Guru ingin siswa memahami teorema Pythagoras dan tripel Pythagoras. Siswa diminta menganalisis metode pembuktiannya, bertujuan meningkatkan kemampuan berpikir:',o:['Representasi matematis.','Kreativitas matematis.','Kritis matematis.','Komunikasi matematis.','Algoritmis matematis.'],k:[1],e:'Menurut kunci sumber, menelaah beragam cara pembuktian melatih kreativitas matematis.',n:'Kunci meragukan: menganalisis pembuktian lebih lazim melatih berpikir kritis (C). Verifikasi ulang.'},
+{t:'s',q:'Guru merancang pembelajaran menulis naratif sederhana agar siswa mengekspresikan gagasan dan imajinasi dengan menarik. Strategi yang bisa ditambahkan:',o:['Sebelum mengeksplorasi kosakata, siswa mencatat peristiwa menarik di sekitar untuk memilih tema.','Saat editing bersama, siswa memakai ceklis untuk memastikan tulisan lebih baik.','Saat mengembangkan kerangka, siswa memperhatikan unsur intrinsik, alur, dan ilustrasi tambahan.','Eksplorasi kosakata dilakukan lewat berbagai sumber seperti buku, situs web, dan e-book.','Editing dilakukan berantai dengan merevisi tulisan teman sekelas.'],k:[0],e:'Menulis naratif berawal dari pengalaman: mencatat peristiwa menarik memberi bahan tema sebelum kosakata dieksplorasi.'}
+];
+var L='ABCDE',cur=0,S=Q.map(function(){return{sel:[],done:false}}),$=function(i){return document.getElementById(i)};
+function ok(i){var q=Q[i],s=S[i].sel;if(q.t=='b')return q.k.every(function(v,j){return s[j]===v});return s.length==q.k.length&&q.k.every(function(v){return s.indexOf(v)>-1})}
+function st(i){return !S[i].done?'':ok(i)?'c':'w'}
+function pick(j,v){var q=Q[cur],s=S[cur];if(s.done)return;if(q.t=='s'){s.sel=[j];s.done=true}else if(q.t=='m'){var p=s.sel.indexOf(j);p>-1?s.sel.splice(p,1):s.sel.push(j)}else s.sel[j]=v;draw()}
+function chk(){S[cur].done=true;draw()}
+function has(i){var s=S[i].sel;return s.filter(function(x){return x!==undefined}).length>0}
+function draw(){
+ var q=Q[cur],s=S[cur],h='<div class="card" id="cd"><p class="hint">'+(q.t=='s'?'Pilih satu jawaban':q.t=='m'?'Pilih semua jawaban yang benar':'Tentukan benar atau salah')+'</p><p class="q">'+q.q+'</p>';
+ q.o.forEach(function(t,j){
+  if(q.t=='b'){var v=s.sel[j],kv=q.k[j];function pl(x,lb){var c=s.done?(x==kv?'key':v===x?'bad':''):(v===x?'on':'');return'<button class="pill '+c+'" '+(s.done?'disabled':'')+' onclick="pick('+j+','+x+')">'+lb+'</button>'}
+   h+='<div class="tf"><p>'+t+'</p><div class="pills">'+pl(1,'Benar')+pl(0,'Salah')+'</div></div>'}
+  else{var on=s.sel.indexOf(j)>-1,isk=q.k.indexOf(j)>-1,c=s.done?(isk?(on?'key':'key miss'):on?'bad':''):(on?'on':'');
+   h+='<button class="opt '+c+'" '+(s.done?'disabled':'')+' onclick="pick('+j+')"><span class="l">'+(s.done&&c.indexOf('key')>-1?'\u2713':s.done&&c=='bad'?'\u2715':L[j])+'</span><span>'+t+'</span></button>'}
+ });
+ if(!s.done&&q.t!='s')h+='<button class="go" '+(has(cur)?'':'disabled')+' onclick="chk()">Periksa jawaban</button>';
+ if(s.done){var r=ok(cur),kt=q.t=='b'?'Semua pernyataan benar.':'Kunci: '+q.k.map(function(x){return L[x]}).join(', ');
+  h+='<div class="exp '+(r?'ok':'no')+'"><h3>'+(r?'Jawaban benar':'Jawaban kurang tepat')+'</h3><p class="k">'+kt+'</p><p>'+q.e+'</p>'+(q.n?'<div class="note"><b>Catatan pemeriksaan.</b> '+q.n+'</div>':'')+'</div>'}
+ h+='</div><foot>by <b>Erikapeb</b></foot>';
+ $('m').innerHTML=h;
+ $('ct').textContent=(cur+1)+' dari '+Q.length;
+ $('pg').style.width=(S.filter(function(x){return x.done}).length/Q.length*100)+'%';
+ $('pv').disabled=cur==0;
+ $('nx').textContent=cur==Q.length-1?'Lihat hasil':'Berikutnya';
+}
+function go(i){cur=i;draw();window.scrollTo({top:0,behavior:'smooth'})}
+$('pv').onclick=function(){go(cur-1)};
+$('nx').onclick=function(){cur==Q.length-1?fin():go(cur+1)};
+$('nm').onclick=function(){var g='';Q.forEach(function(_,i){g+='<button class="'+st(i)+(i==cur?' here':'')+'" onclick="jump('+i+')">'+(i+1)+'</button>'});$('gr').innerHTML=g;$('sh').classList.add('show')};
+function jump(i){$('sh').classList.remove('show');go(i)}
+$('sh').onclick=function(e){if(e.target==this)this.classList.remove('show')};
+function fin(){
+ var c=0,w=0;Q.forEach(function(_,i){var x=st(i);if(x=='c')c++;if(x=='w')w++});
+ var sk=Q.length-c-w,rv='';
+ Q.forEach(function(_,i){var x=st(i);rv+='<button class="rv" onclick="go2('+i+')"><span>Soal '+(i+1)+'</span><em class="'+(x||'s')+'">'+(x=='c'?'Benar':x=='w'?'Salah':'Belum dijawab')+'</em></button>'});
+ $('dk').style.display='none';
+ $('m').innerHTML='<div class="card sc"><div class="n">'+Math.round(c/Q.length*100)+'</div><p>skor dari 100</p><div class="stats"><div><b>'+c+'</b>benar</div><div><b>'+w+'</b>salah</div><div><b>'+sk+'</b>kosong</div></div></div><div class="card" style="margin-top:14px;padding:8px 16px">'+rv+'</div><div class="card" style="margin-top:14px;padding:12px"><button class="go" style="margin:0" onclick="again()">Ulangi dari awal</button></div><foot>by <b>Erikapeb</b></foot>';
+ $('pg').style.width='100%';$('ct').textContent='Hasil';window.scrollTo(0,0)}
+function go2(i){$('dk').style.display='';go(i)}
+function again(){S=Q.map(function(){return{sel:[],done:false}});$('dk').style.display='';go(0)}
+draw();
+</script>
 </body>
 </html>
