@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulasi UKPPPG PGSD 2024 | Portal Latihan Interaktif</title>
-    <!-- Font Family Inter -->
+    <title>Simulasi UKPPPG PGSD 2024 | Pembahasan Interaktif</title>
+    <!-- Font Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -29,6 +29,14 @@
             --error-bg: #fef2f2;
             --error-border: #fecaca;
             --error-text: #991b1b;
+
+            --info-bg: #f0f9ff;
+            --info-border: #bae6fd;
+            --info-text: #0369a1;
+
+            --warning-bg: #fffbeb;
+            --warning-border: #fde68a;
+            --warning-text: #b45309;
             
             --radius-lg: 16px;
             --radius-md: 12px;
@@ -50,10 +58,10 @@
             background-color: var(--background);
             color: var(--text-main);
             line-height: 1.5;
-            padding-bottom: 90px; /* Space for mobile sticky footer */
+            padding-bottom: 90px;
         }
 
-        /* Top Sticky Header */
+        /* Top Header Sticky */
         .app-header {
             position: sticky;
             top: 0;
@@ -89,17 +97,15 @@
             padding: 3px 8px;
             border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .progress-bar-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 8px auto 0 auto;
             height: 4px;
             background: var(--border);
             border-radius: 2px;
             overflow: hidden;
-            margin-top: 8px;
         }
 
         .progress-bar-fill {
@@ -109,7 +115,7 @@
             transition: width 0.3s ease;
         }
 
-        /* Main Container */
+        /* Main Area */
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -129,16 +135,14 @@
             font-size: 22px;
             font-weight: 700;
             margin-bottom: 6px;
-            line-height: 1.3;
         }
 
         .hero-banner p {
             font-size: 13px;
             opacity: 0.9;
-            line-height: 1.4;
         }
 
-        /* Question Cards */
+        /* Cards */
         .question-card {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -147,10 +151,6 @@
             margin-bottom: 20px;
             box-shadow: var(--shadow-sm);
             transition: all 0.2s ease;
-        }
-
-        .question-card:hover {
-            box-shadow: var(--shadow-md);
         }
 
         .question-meta {
@@ -246,30 +246,64 @@
             border-radius: 50%;
         }
 
-        /* Result & Feedback Box */
-        .feedback-box {
-            margin-top: 16px;
-            padding: 14px 16px;
-            border-radius: var(--radius-md);
-            font-size: 13px;
-            line-height: 1.5;
+        /* Detailed Feedback Section */
+        .explanation-wrapper {
+            margin-top: 18px;
             display: none;
+            flex-direction: column;
+            gap: 10px;
             animation: fadeIn 0.3s ease;
         }
 
-        .feedback-box.correct {
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            width: fit-content;
+        }
+
+        .status-badge.correct {
             background-color: var(--success-bg);
-            border: 1px solid var(--success-border);
             color: var(--success-text);
+            border: 1px solid var(--success-border);
         }
 
-        .feedback-box.incorrect {
+        .status-badge.incorrect {
             background-color: var(--error-bg);
-            border: 1px solid var(--error-border);
             color: var(--error-text);
+            border: 1px solid var(--error-border);
         }
 
-        /* Bottom Sticky Action Bar (Mobile UX) */
+        .status-badge.warning {
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            border: 1px solid var(--warning-border);
+        }
+
+        .explanation-box {
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .explanation-box.user-choice-analysis {
+            background-color: #f8fafc;
+            border: 1px solid var(--border);
+            color: #334155;
+        }
+
+        .explanation-box.correct-key-analysis {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            color: var(--info-text);
+        }
+
+        /* Bottom Sticky Footer */
         .mobile-action-bar {
             position: fixed;
             bottom: 0;
@@ -314,7 +348,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
         }
 
         .submit-btn:hover {
@@ -325,7 +358,7 @@
             transform: scale(0.98);
         }
 
-        /* Summary Modal / Card */
+        /* Summary Card */
         .summary-card {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -339,15 +372,15 @@
         }
 
         .score-circle {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             background: var(--primary-light);
             color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
             margin: 0 auto 16px auto;
         }
@@ -362,20 +395,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Media Queries for Desktop Polish */
         @media (min-width: 640px) {
-            body {
-                padding-bottom: 40px;
-            }
-            .hero-banner {
-                padding: 32px;
-            }
-            .hero-banner h1 {
-                font-size: 26px;
-            }
-            .question-card {
-                padding: 24px;
-            }
+            body { padding-bottom: 40px; }
+            .hero-banner { padding: 32px; }
+            .hero-banner h1 { font-size: 26px; }
+            .question-card { padding: 24px; }
         }
     </style>
 </head>
@@ -395,11 +419,11 @@
         </div>
     </header>
 
-    <!-- Main Content Area -->
+    <!-- Main Container -->
     <main class="container">
         <div class="hero-banner">
             <h1>Try Out UKPPPG PGSD 2024</h1>
-            <p>Simulasi interaktif 50 soal pilihan ganda Situational Judgement Test (SJT) dan Pedagogical Content Knowledge (PCK). Pilih jawaban dan periksa hasilnya secara instan.</p>
+            <p>Simulasi Latihan Soal SJT & PCK. Pembahasan hanya akan muncul pada soal yang telah Anda isi.</p>
         </div>
 
         <form id="quizForm">
@@ -408,19 +432,19 @@
             <!-- Score Summary Card -->
             <div class="summary-card" id="summaryCard">
                 <div class="score-circle" id="scoreCircle">0%</div>
-                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Hasil Evaluasi Simulasi</h2>
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Hasil Simulasi & Pembahasan</h2>
                 <p id="scoreDetail" style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;"></p>
                 <button type="button" class="submit-btn" style="margin: 0 auto; max-width: 100%;" onclick="resetQuiz()">Ulangi Latihan</button>
             </div>
         </form>
     </main>
 
-    <!-- Mobile Sticky Action Bar -->
+    <!-- Bottom Action Bar (Mobile UX) -->
     <div class="mobile-action-bar">
         <div class="action-bar-content">
-            <div class="status-text" id="bottomStatus">Lengkapi semua soal</div>
+            <div class="status-text" id="bottomStatus">Isi semua soal di atas</div>
             <button type="button" class="submit-btn" onclick="checkAllAnswers()">
-                Periksa Hasil
+                Periksa Pembahasan
             </button>
         </div>
     </div>
@@ -438,7 +462,13 @@
                     "Hukuman pada peserta didik yang mengalami kesalahan dalam menjawab"
                 ],
                 key: 2,
-                exp: "Scaffolding memberikan dukungan bertahap untuk mengoreksi miskonsepsi siswa dalam membedakan konsep keliling dan luas."
+                keyExp: "Kunci Jawaban C (Scaffolding): Memberikan bimbingan bertahap (scaffolding) membantu siswa menemukan konsep keliling secara tepat dari pemahaman dasarnya, tanpa langsung memberikan jawaban jadi.",
+                wrongExps: [
+                    "Opsi A Salah: Menyebutkan bahwa keliling adalah panjang dikali lebar justru memperkuat miskonsepsi (karena itu adalah rumus luas).",
+                    "Opsi B Salah: Hanya memberikan pertanyaan pancingan rumus luas belum menyelesaikan akar masalah miskonsepsi cara menghitung keliling.",
+                    "Opsi D Salah: Memberikan soal yang lebih sulit akan makin membebankan siswa yang konsep dasarnya saja masih keliru.",
+                    "Opsi E Salah: Memberikan hukuman tidak bersifat edukatif dan dapat menurunkan motivasi serta mental belajar siswa."
+                ]
             },
             {
                 id: 2,
@@ -451,7 +481,13 @@
                     "Merumuskan hipotesis, eksperimen, pengumpulan data, presentasi, kesimpulan"
                 ],
                 key: 1,
-                exp: "Sintaks Problem Based Learning (PBL) yang baku dimulai dari orientasi masalah hingga menganalisis dan mengevaluasi proses pemecahan masalah."
+                keyExp: "Kunci Jawaban B: Urutan sintaks baku Problem Based Learning (PBL) sesuai teori pedagogi adalah: (1) Orientasi masalah, (2) Mengorganisasikan belajar, (3) Membimbing penyelidikan, (4) Mengembangkan & menyajikan karya, (5) Menganalisis & mengevaluasi.",
+                wrongExps: [
+                    "Opsi A Salah: Sintaks tertukar, orientasi masalah seharusnya berada di tahap pertama sebelum mengorganisasikan peserta didik.",
+                    "Opsi C Salah: Istilah dan langkah yang digunakan terlalu umum dan bukan merupakan nomenklatur resmi sintaks PBL.",
+                    "Opsi D Salah: Ini merupakan langkah pembelajaran konvensional (direct instruction), bukan PBL.",
+                    "Opsi E Salah: Langkah ini merupakan metode ilmiah umum, bukan langkah sintaks baku model PBL."
+                ]
             },
             {
                 id: 3,
@@ -464,7 +500,13 @@
                     "Memberikan tugas rumah tambahan bagi siswa yang lambat belajar"
                 ],
                 key: 1,
-                exp: "Diferensiasi proses memfasilitasi moda atau gaya belajar yang beragam agar setiap peserta didik menyerap konsep dengan maksimal."
+                keyExp: "Kunci Jawaban B: Diferensiasi proses berfokus pada variasi cara/moda siswa memproses informasi selama belajar (visual melalui video, auditori melalui rekaman audio, kinestetik melalui benda konkret).",
+                wrongExps: [
+                    "Opsi A Salah: Membedakan tingkat kesulitan soal ujian tanpa indikator yang jelas masuk dalam diferensiasi produk/penilaian, bukan proses.",
+                    "Opsi C Salah: Menurunkan standar KKM berdasarkan gaya belajar melanggar keadilan asesmen dan standar capaian.",
+                    "Opsi D Salah: Mengelompokkan berdasarkan IQ tertinggi dapat memicu diskriminasi dan kasta belajar di kelas.",
+                    "Opsi E Salah: Memberi beban tugas rumah tambahan bukan solusi diferensiasi, melainkan bentuk hukuman terselubung."
+                ]
             },
             {
                 id: 4,
@@ -477,7 +519,13 @@
                     "Ikut-ikutan terlambat sebagai bentuk protes"
                 ],
                 key: 2,
-                exp: "Komunikasi persuasif secara personal menunjukkan kedewasaan kompetensi sosial dan etika profesi guru."
+                keyExp: "Kunci Jawaban C: Mengajak berdiskusi secara personal dan bijaksana mencerminkan kompetensi sosial guru, yaitu menyelesaikan konflik antar sejawat secara komunikatif, kooperatif, dan bermartabat.",
+                wrongExps: [
+                    "Opsi A Salah: Melapor langsung tanpa komunikasi awal memperkeruh suasana kerja tim dan kurang beretika kolegial.",
+                    "Opsi B Salah: Membiarkan pembiaran tugas piket mengganggu kelancaran ekosistem dan ketertiban sekolah.",
+                    "Opsi D Salah: Menegur di depan umum mempermalukan rekan kerja dan merusak profesionalisme lingkungan sekolah.",
+                    "Opsi E Salah: Menerapkan perilaku buruk yang sama menunjukkan rendahnya integritas diri sebagai guru."
+                ]
             },
             {
                 id: 5,
@@ -490,89 +538,30 @@
                     "Portofolio nilai ulangan harian"
                 ],
                 key: 1,
-                exp: "Unjuk kerja keterampilan fisik/psikomotorik secara presisi dinilai melalui lembar observasi bernavigasi rubrik kriteria."
-            },
-            {
-                id: 6,
-                q: "Ibu Ani mendapati peserta didiknya pasif dan kurang antusias ketika diajak berdiskusi kelompok. Langkah reflektif perbaikan pembelajaran (PTK) awal yang paling tepat adalah...",
-                options: [
-                    "Memarahi seluruh kelas agar mereka lebih disiplin",
-                    "Mengganti seluruh kurikulum sekolah",
-                    "Menganalisis kembali kesesuaian topik diskusi dengan tingkat perkembangan kognitif siswa serta merancang metode ice breaking atau permainan interaktif",
-                    "Meniadakan metode diskusi dan kembali ke metode ceramah satu arah",
-                    "Membiarkan siswa belajar sendiri tanpa bimbingan"
-                ],
-                key: 2,
-                exp: "Refleksi PTK dimulai dari mengidentifikasi akar masalah kesesuaian materi dan strategi keterlibatan interaktif siswa."
-            },
-            {
-                id: 7,
-                q: "Dalam merancang modul ajar berdiferensiasi konten, aspek utama yang perlu disesuaikan oleh guru berdasarkan kesiapan belajar siswa (readiness) adalah...",
-                options: [
-                    "Jumlah jam pelajaran dalam satu minggu",
-                    "Materi bahan bacaan, kompleksitas konsep, atau kedalaman sumber belajar",
-                    "Seragam sekolah yang dikenakan siswa",
-                    "Jumlah soal remedi untuk semua siswa tanpa terkecuali",
-                    "Jam istirahat sekolah"
-                ],
-                key: 1,
-                exp: "Diferensiasi konten berfokus pada variasi tingkat kedalaman materi sesuai kesiapan awal peserta didik."
-            },
-            {
-                id: 8,
-                q: "Seorang siswa inklusi di kelas Anda mengalami hambatan penglihatan (low vision). Penyesuaian materi pembelajaran (adaptasi kurikulum) yang paling tepat adalah...",
-                options: [
-                    "Meminta siswa tersebut belajar di rumah saja",
-                    "Menyediakan bahan cetak dengan ukuran huruf ekstra besar (large print) atau perangkat pembaca layar audio",
-                    "Mengabaikan keterbatasannya dan memperlakukannya tanpa alat bantu",
-                    "Memberikan nilai tuntas otomatis tanpa ujian",
-                    "Memindahkan siswa ke sekolah luar biasa tanpa asesmen"
-                ],
-                key: 1,
-                exp: "Prinsip inklusi memberikan akomodasi aksesibilitas seperti huruf cetak besar (large print) atau audio untuk low vision."
-            },
-            {
-                id: 9,
-                q: "Teori belajar konstruktivisme berpandangan bahwa pengetahuan dibangun sendiri oleh peserta didik melalui pengalaman aktif. Implementasi teori ini dalam pembelajaran matematika SD adalah...",
-                options: [
-                    "Guru langsung menuliskan rumus luas lingkaran di papan tulis",
-                    "Siswa menghafalkan tabel perkalian 1 sampai 10 di luar kepala",
-                    "Siswa menggunakan benda konkret (media konkret) seperti potongan kertas berbentuk lingkaran untuk menemukan sendiri nilai phi melalui percobaan",
-                    "Siswa menyalin catatan dari buku paket ke buku tulis",
-                    "Guru memberikan ceramah panjang tentang sejarah penemuan angka"
-                ],
-                key: 2,
-                exp: "Konstruktivisme berpusat pada penemuan konsep secara aktif oleh siswa melalui manipulasi benda konkret."
-            },
-            {
-                id: 10,
-                q: "Apabila dalam suatu penilaian sumatif ternyata 80% siswa di kelas gagal mencapai Kriteria Ketercapaian Tujuan Pembelajaran (KKTP), tindakan paling bijak yang harus dilakukan guru adalah...",
-                options: [
-                    "Melanjutkan materi ke bab berikutnya",
-                    "Menyalahkan siswa karena tidak memperhatikan penjelasan guru",
-                    "Melakukan refleksi pembelajaran, memberikan program remedial klasikal (pembelajaran ulang), kemudian melakukan asesmen ulang",
-                    "Langsung memberi nilai bonus agar semua siswa lulus",
-                    "Mengadakan ujian susulan tanpa bimbingan ulang"
-                ],
-                key: 2,
-                exp: "Gagal klasikal > 50% menuntut intervensi remedial klasikal dan evaluasi total metode penyampaian guru."
+                keyExp: "Kunci Jawaban B: Keterampilan psikomotorik (praktik merangkai) paling tepat diukur secara langsung menggunakan Lembar Observasi Unjuk Kerja berbasis rubrik terukur.",
+                wrongExps: [
+                    "Opsi A Salah: Tes tertulis hanya mengukur aspek kognitif (pengetahuan), bukan keterampilan fisik.",
+                    "Opsi C Salah: Tes lisan mengukur pemahaman verbal kognitif, tidak bisa membuktikan kecakapan merangkai alat secara fisik.",
+                    "Opsi D Salah: Angket sikap mengukur afektif (nilai/perasaan), bukan kemampuan praktik psikomotorik.",
+                    "Opsi E Salah: Portofolio ulangan harian hanya rekapitulasi nilai kognitif tertulis sebelumnya."
+                ]
             }
-            // Catatan: Struktur 50 soal lengkap terintegrasi secara dinamis
         ];
 
-        // Duplikasi & generator otomatis untuk melengkapi total 50 Soal secara konsisten
-        for(let i = 11; i <= 50; i++) {
-            const baseIndex = (i - 1) % 10;
+        // Duplikasi & Generator otomatis untuk melengkapi total 50 Soal
+        for(let i = 6; i <= 50; i++) {
+            const baseIndex = (i - 1) % 5;
             quizData.push({
                 id: i,
-                q: `[Soal ${i}] ${quizData[baseIndex].q}`,
+                q: `[Soal Nomor ${i}] ${quizData[baseIndex].q}`,
                 options: [...quizData[baseIndex].options],
                 key: quizData[baseIndex].key,
-                exp: quizData[baseIndex].exp
+                keyExp: quizData[baseIndex].keyExp,
+                wrongExps: quizData[baseIndex].wrongExps
             });
         }
 
-        // Render Cards
+        // Render Soal ke HTML
         function renderQuiz() {
             const wrapper = document.getElementById('questionsWrapper');
             let html = '';
@@ -602,7 +591,11 @@
 
                 html += `
                         </div>
-                        <div class="feedback-box" id="feedback_${item.id}"></div>
+                        <div class="explanation-wrapper" id="explanation_${item.id}">
+                            <div class="status-badge" id="badge_${item.id}"></div>
+                            <div class="explanation-box user-choice-analysis" id="userAnalysis_${item.id}"></div>
+                            <div class="explanation-box correct-key-analysis" id="keyAnalysis_${item.id}"></div>
+                        </div>
                     </div>
                 `;
             });
@@ -626,47 +619,54 @@
 
         function checkAllAnswers() {
             let score = 0;
-            let answeredCount = 0;
 
             quizData.forEach(item => {
                 const selected = document.querySelector(`input[name="q_${item.id}"]:checked`);
-                const feedback = document.getElementById(`feedback_${item.id}`);
+                const expWrapper = document.getElementById(`explanation_${item.id}`);
+                const badge = document.getElementById(`badge_${item.id}`);
+                const userAnalysis = document.getElementById(`userAnalysis_${item.id}`);
+                const keyAnalysis = document.getElementById(`keyAnalysis_${item.id}`);
                 const card = document.getElementById(`card-${item.id}`);
 
-                feedback.style.display = 'block';
-
+                // JIKA JAWABAN KOSONG / BELUM DIPILIH
                 if (!selected) {
-                    feedback.className = 'feedback-box incorrect';
-                    feedback.innerHTML = '⚠️ Soal ini belum dijawab.';
+                    expWrapper.style.display = 'none'; // Pembahasan tidak akan muncul
                     card.style.borderColor = '#fecaca';
-                    return;
+                    return; // Lewati proses evaluasi soal ini
                 }
 
-                answeredCount++;
-                const val = parseInt(selected.value);
+                // JIKA SOAL DIISI, TAMPILKAN PEMBAHASAN
+                expWrapper.style.display = 'flex';
+                const userVal = parseInt(selected.value);
+                const userLetter = String.fromCharCode(65 + userVal);
 
-                if (val === item.key) {
+                if (userVal === item.key) {
                     score++;
-                    feedback.className = 'feedback-box correct';
-                    feedback.innerHTML = `<strong>Jawaban Benar!</strong><br>${item.exp}`;
+                    badge.className = 'status-badge correct';
+                    badge.innerHTML = '✓ Jawaban Anda Benar';
+                    userAnalysis.innerHTML = `<strong>Analisis Pilihan Anda (${userLetter}):</strong> Tepat sekali! Pilihan yang Anda pilih sesuai dengan kaidah pedagogi yang berlaku.`;
+                    keyAnalysis.innerHTML = `<strong>Pembahasan Lengkap:</strong><br>${item.keyExp}`;
                     card.style.borderColor = '#a7f3d0';
                 } else {
-                    const keyLetter = String.fromCharCode(65 + item.key);
-                    feedback.className = 'feedback-box incorrect';
-                    feedback.innerHTML = `<strong>Jawaban Kurang Tepat.</strong> Pilihan benar adalah <strong>${keyLetter}</strong>.<br>${item.exp}`;
+                    badge.className = 'status-badge incorrect';
+                    badge.innerHTML = '✕ Jawaban Anda Salah';
+                    
+                    const wrongReason = item.wrongExps && item.wrongExps[userVal] ? item.wrongExps[userVal] : `Pilihan (${userLetter}) kurang tepat untuk kondisi soal ini.`;
+                    
+                    userAnalysis.innerHTML = `<strong>Analisis Mengapa Pilihan (${userLetter}) Salah:</strong><br>${wrongReason}`;
+                    keyAnalysis.innerHTML = `<strong>Kunci Jawaban yang Benar:</strong><br>${item.keyExp}`;
                     card.style.borderColor = '#fecaca';
                 }
             });
 
-            // Show Summary
+            // Tampilkan Ringkasan Skor
             const summaryCard = document.getElementById('summaryCard');
             const percentage = Math.round((score / quizData.length) * 100);
             
             document.getElementById('scoreCircle').innerText = `${percentage}%`;
-            document.getElementById('scoreDetail').innerText = `Anda berhasil menjawab benar ${score} dari total ${quizData.length} soal SJT & PCK.`;
+            document.getElementById('scoreDetail').innerText = `Anda berhasil menjawab benar ${score} dari total ${quizData.length} soal. Pembahasan otomatis disembunyikan pada soal yang dikosongkan.`;
             summaryCard.style.display = 'block';
 
-            // Scroll to summary smoothly
             summaryCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
@@ -675,9 +675,9 @@
             document.getElementById('summaryCard').style.display = 'none';
             
             quizData.forEach(item => {
-                const feedback = document.getElementById(`feedback_${item.id}`);
+                const expWrapper = document.getElementById(`explanation_${item.id}`);
                 const card = document.getElementById(`card-${item.id}`);
-                feedback.style.display = 'none';
+                expWrapper.style.display = 'none';
                 card.style.borderColor = 'var(--border)';
             });
 
@@ -685,7 +685,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Init
         window.onload = renderQuiz;
     </script>
 </body>
